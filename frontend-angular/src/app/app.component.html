@@ -1,0 +1,12 @@
+<nz-layout class="container">
+  <nz-sider *ngIf="isAuthenticated" nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate">
+    <app-drawer></app-drawer>
+  </nz-sider>
+  <nz-layout class="container">
+    <app-header></app-header>
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+    <app-footer></app-footer>
+  </nz-layout>
+</nz-layout>

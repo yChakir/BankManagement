@@ -1,0 +1,14 @@
+.sider {
+  background: #fff;
+  border-right: 1px solid #e8e8e8;
+}
+
+.sider-menu {
+  border-right: 0px solid #e8e8e8;
+}
+
+.logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}
