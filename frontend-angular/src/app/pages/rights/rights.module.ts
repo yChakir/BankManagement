@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RightsPageComponent } from './rights-page/rights-page.component';
+
+import { RightsRoutingModule } from './rights-routing.module';
+import {RightsPageComponent} from "./rights-page/rights-page.component";
 
 @NgModule({
   declarations: [RightsPageComponent],
   imports: [
-    CommonModule
-  ],
-  exports: [RightsPageComponent]
+    CommonModule,
+    RightsRoutingModule
+  ]
 })
 export class RightsModule { }

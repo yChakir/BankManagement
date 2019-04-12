@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HistoryPageComponent } from './history-page/history-page.component';
+
+import { HistoryRoutingModule } from './history-routing.module';
+import {HistoryPageComponent} from "./history-page/history-page.component";
 
 @NgModule({
   declarations: [HistoryPageComponent],
   imports: [
-    CommonModule
-  ],
-  exports: [HistoryPageComponent]
+    CommonModule,
+    HistoryRoutingModule
+  ]
 })
 export class HistoryModule { }

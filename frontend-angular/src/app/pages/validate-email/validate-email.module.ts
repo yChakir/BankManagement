@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ValidateEmailPageComponent } from './validate-email-page/validate-email-page.component';
+
+import { ValidateEmailRoutingModule } from './validate-email-routing.module';
+import {ValidateEmailPageComponent} from "./validate-email-page/validate-email-page.component";
 
 @NgModule({
   declarations: [ValidateEmailPageComponent],
   imports: [
-    CommonModule
-  ],
-  exports: [ValidateEmailPageComponent]
+    CommonModule,
+    ValidateEmailRoutingModule
+  ]
 })
 export class ValidateEmailModule { }
