@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LayoutService} from "../../../core/layout.service";
-import {AuthService} from "../../../core/auth.service";
+import {UserService} from "../../../core/user.service";
 
 @Component({
   selector: 'app-header',
@@ -14,12 +14,13 @@ export class HeaderComponent implements OnInit {
   isAuthenticated: boolean = false;
 
   constructor(
-    private authService: AuthService,
+    private authService: UserService,
     private layoutService: LayoutService
   ) {
   }
 
   ngOnInit() {
+    this.isAuthenticated = this.authService.getCurrentAuthenticationState();
     this.layoutService.getIsCollapsed().subscribe(value => this.isCollapsed = value);
     this.authService.getIsAuthenticated().subscribe(value => this.isAuthenticated = value);
   }

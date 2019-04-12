@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPageComponent implements OnInit {
 
+  isAuthenticated: boolean = false;
+
+  marginTop: string = '6%';
+
   constructor() { }
 
   ngOnInit() {
+    this.checkLogin();
   }
 
+  private checkLogin() {
+    if (this.isAuthenticated) {
+
+    }
+  }
 }

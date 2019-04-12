@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class JwtService {
 
-  private bearer = 'Bearer ';
+  private bearer = environment.jwt.bearer;
 
   constructor() {
   }

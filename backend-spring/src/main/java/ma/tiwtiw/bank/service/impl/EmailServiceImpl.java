@@ -35,9 +35,9 @@ public class EmailServiceImpl implements EmailService {
     SimpleMailMessage message = new SimpleMailMessage();
 
     message.setTo(event.getToken().getUser().getEmail());
-    message.setSubject(Translator.translate("email.registration.title"));
+    message.setSubject(Translator.translate("username.registration.title"));
     message.setText(Translator.translate(
-        "email.registration.body",
+        "username.registration.body",
         event.getToken().getUser().getFirstName(),
         event.getToken().getUser().getLastName(),
         event.getToken().getUser().getEmail(),
@@ -56,9 +56,9 @@ public class EmailServiceImpl implements EmailService {
     SimpleMailMessage message = new SimpleMailMessage();
 
     message.setTo(event.getToken().getUser().getEmail());
-    message.setSubject(Translator.translate("email.forgot-password.title"));
+    message.setSubject(Translator.translate("username.forgot-password.title"));
     message.setText(Translator.translate(
-        "email.forgot-password.body",
+        "username.forgot-password.body",
         event.getToken().getUser().getFirstName(),
         event.getToken().getUser().getLastName(),
         event.getToken().getUser().getEmail(),
@@ -82,10 +82,10 @@ public class EmailServiceImpl implements EmailService {
     );
 
     try {
-      log.debug("sendAndSave() :: Sending email = {}", email);
+      log.debug("sendAndSave() :: Sending username = {}", email);
       sender.send(message);
     } catch (Exception e) {
-      log.error("sendAndSave() :: error while sending email = {}, message = {}", email,
+      log.error("sendAndSave() :: error while sending username = {}, message = {}", email,
           e.getMessage());
       email.setSent(false);
     } finally {

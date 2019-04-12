@@ -7,9 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterPageComponent implements OnInit {
 
+  marginTop: string = '3%';
+
   constructor() { }
 
   ngOnInit() {
   }
-
 }

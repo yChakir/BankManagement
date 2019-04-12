@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {LayoutService} from "./layout.service";
-import {AuthService} from "./auth.service";
+import {UserService} from "./user.service";
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule
   ],
-  providers: [LayoutService, AuthService]
+  providers: [LayoutService, UserService]
 })
 export class CoreModule { }

@@ -82,14 +82,14 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional(readOnly = true)
   public User findByEmail(String email) {
-    log.debug("findByEmail() :: email = {}", email);
+    log.debug("findByEmail() :: username = {}", email);
     return repository.findByEmail(email).orElseThrow(
         () -> new UsernameNotFoundException(Translator.translate("exception.user.not-found")));
   }
 
   @Override
   public void delete(String email) {
-    log.debug("delete() :: email = {}", email);
+    log.debug("delete() :: username = {}", email);
     User user = repository.findByEmail(email).orElseThrow(
         () -> new UsernameNotFoundException(Translator.translate("exception.user.not-found")));
 
@@ -108,10 +108,10 @@ public class UserServiceImpl implements UserService {
   @Override
   public User register(Registration registration) {
     log.debug("register() :: registration = {}", registration);
-    Optional<User> alreadyExit = repository.findByEmail(registration.getEmail());
+    Optional<User> alreadyExit = repository.findByEmail(registration.getUsername());
 
     if (alreadyExit.isPresent()) {
-      log.warn("register() :: registration already exist: {}", registration.getEmail());
+      log.warn("register() :: registration already exist: {}", registration.getUsername());
       throw new ClientException(Translator.translate("exception.user.already-exist"));
     }
 
@@ -173,10 +173,10 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void forgotPassword(String email) {
-    log.debug("forgotPassword() :: email = {}", email);
+    log.debug("forgotPassword() :: username = {}", email);
     Optional<User> optionalUser = repository.findByEmail(email);
 
-    log.debug("forgotPassword() :: check if user present email = {}, present = {}", email,
+    log.debug("forgotPassword() :: check if user present username = {}, present = {}", email,
         optionalUser.isPresent());
     optionalUser.ifPresent(user -> {
       List<Token> tokens = tokenService
@@ -245,7 +245,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void changePassword(String email, ChangePassword changePassword) {
-    log.debug("changePassword() :: email = {}, changePassword = {}", email, changePassword);
+    log.debug("changePassword() :: username = {}, changePassword = {}", email, changePassword);
 
     if (!changePassword.getConfirmation().equals(changePassword.getNewPassword())) {
       log.warn("changePassword() :: new password do not match confirmation.");

@@ -3,6 +3,26 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  api: {
+    url: "http://localhost:8080"
+  },
+  jwt: {
+    header: "Authorization",
+    bearer: "Bearer "
+  },
+  routes: {
+    login: "/login",
+    register: "/register",
+    validateEmail: "/validate-email",
+    forgotPassword: "/forgot-password",
+    validatePassword: "/validate-password",
+    profile: "/profile",
+    accounts: "/accounts",
+    roles: "/roles",
+    rights: "/rights",
+    history: "/history",
+
+  },
   production: false
 };
 

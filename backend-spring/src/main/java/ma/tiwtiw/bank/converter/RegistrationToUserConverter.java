@@ -14,7 +14,7 @@ public class RegistrationToUserConverter implements Converter<Registration, User
 
     result.setFirstName(registration.getFirstName());
     result.setLastName(registration.getLastName());
-    result.setEmail(registration.getEmail());
+    result.setEmail(registration.getUsername());
     result.setPassword(registration.getPassword());
 
     return result;

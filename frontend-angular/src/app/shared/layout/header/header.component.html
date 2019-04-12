@@ -1,6 +1,7 @@
 <nz-header style="background: #fff; padding:0;">
   <i *ngIf="isAuthenticated" class="trigger" nz-icon [type]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
      (click)="toggle()"></i>
+  Bank Management
   <ul nz-menu [nzMode]="'horizontal'" style="line-height: 64px; float: right;">
     <li *ngIf="!isAuthenticated" nz-menu-item>
       <a routerLink="login"><i nz-icon type="login"></i><span class="nav-text">Login</span></a>

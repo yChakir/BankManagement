@@ -17,7 +17,7 @@ public class Registration {
   @Email
   @NotBlank
   @Size(min = 3, max = 100)
-  private String email;
+  private String username;
 
   @NotBlank
   @Size(min = 8, max = 50)
