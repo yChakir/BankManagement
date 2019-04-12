@@ -62,10 +62,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
       writeQuietly(response, exception);
     } catch (InternalAuthenticationServiceException e) {
       log.debug("attemptAuthentication() :: authentication failed, message = ", e.getMessage());
-      if (e.getMessage().equals(Translator.translate("exception.auth.account-not-active"))) {
+      if (e.getMessage().equals(Translator.translate("exception.auth.user-not-active"))) {
+        ClientException exception = new ClientException(e.getMessage());
+        exception.setStackTrace(new StackTraceElement[]{});
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        writeQuietly(response, new ClientException(e.getMessage()));
+        writeQuietly(response, exception);
       }
     } catch (IOException e) {
       log.debug("attemptAuthentication() :: authentication failed, message = ", e.getMessage());
