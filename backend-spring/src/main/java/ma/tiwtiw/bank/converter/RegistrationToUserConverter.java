@@ -10,11 +10,13 @@ public class RegistrationToUserConverter implements Converter<Registration, User
 
   @Override
   public User convert(Registration registration) {
-    return new User() {{
-      setFirstName(registration.getFirstName());
-      setLastName(registration.getLastName());
-      setEmail(registration.getEmail());
-      setPassword(registration.getPassword());
-    }};
+    User result = new User();
+
+    result.setFirstName(registration.getFirstName());
+    result.setLastName(registration.getLastName());
+    result.setEmail(registration.getEmail());
+    result.setPassword(registration.getPassword());
+
+    return result;
   }
 }
