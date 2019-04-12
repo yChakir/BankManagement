@@ -22,7 +22,7 @@
   <nz-form-item style="margin-bottom: 0;">
     <nz-form-control>
       <a [routerLink]="routes.forgotPassword" class="login-form-forgot">Forgot password</a>
-      <button nz-button class="login-form-button" [nzType]="'primary'" [nzLoading]="loading">Log in</button>
+      <button nz-button class="login-form-button" [nzType]="'primary'" [nzLoading]="loading" [disabled]="!form.valid">Log in</button>
       Or
       <a [routerLink]="routes.register">register now!</a>
     </nz-form-control>
