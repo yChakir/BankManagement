@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ma.tiwtiw.bank.pojo.EmailType;
+import ma.tiwtiw.bank.pojo.MailType;
 import org.hibernate.envers.Audited;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -21,31 +21,31 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Audited
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "EMAILS")
+@Table(name = "MAILS")
 @EntityListeners(AuditingEntityListener.class)
-public class Email extends BaseEntity {
+public class Mail extends BaseEntity {
 
   @Id
-  @Column(name = "email_id")
+  @Column(name = "mail_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "email_from")
+  @Column(name = "mail_from")
   private String from;
 
-  @Column(name = "email_to")
+  @Column(name = "mail_to")
   private String to;
 
-  @Column(name = "email_subject")
+  @Column(name = "mail_subject")
   private String subject;
 
-  @Column(name = "email_message", length = 3000)
-  private String message;
+  @Column(name = "mail_content", length = 3000)
+  private String content;
 
-  @Column(name = "email_sent")
+  @Column(name = "mail_sent")
   private boolean sent;
 
-  @Column(name = "email_type")
+  @Column(name = "mail_type")
   @Enumerated(EnumType.STRING)
-  private EmailType type;
+  private MailType type;
 }

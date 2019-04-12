@@ -23,6 +23,6 @@ public class ResetPassword {
 
   @NotBlank
   @Size(min = 8, max = 50)
-  //@Pattern(regexp = "^.*(([a-zA-Z]+.*[0-9]+)|([0-9]+.*[a-zA-Z]+)).*$", message = "{validations.password-strength}")
+  //@Pattern(regexp = "^.*(([a-zA-Z]+.*[0-9]+)|([0-9]+.*[a-zA-Z]+)).*$", content = "{validations.password-strength}")
   private String password;
 }
