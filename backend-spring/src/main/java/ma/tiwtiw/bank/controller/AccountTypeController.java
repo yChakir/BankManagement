@@ -29,7 +29,6 @@ public class AccountTypeController {
   @GetMapping
   public ResponseEntity<List<AccountType>> findAll() {
     List<AccountType> result = accountTypeService.findAll();
-    List<AccountType> result = accountTypeService.findAll();
 
     return ResponseEntity.ok(result);
   }

@@ -1,10 +1,10 @@
 package ma.tiwtiw.bank.controller;
 
 import javax.validation.Valid;
-import ma.tiwtiw.bank.dto.ValidateEmail;
 import ma.tiwtiw.bank.dto.ForgotPassword;
 import ma.tiwtiw.bank.dto.Registration;
 import ma.tiwtiw.bank.dto.ResetPassword;
+import ma.tiwtiw.bank.dto.ValidateEmail;
 import ma.tiwtiw.bank.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,7 +1,6 @@
 package ma.tiwtiw.bank.converter;
 
 import ma.tiwtiw.bank.dto.AccountResult;
-import ma.tiwtiw.bank.dto.Registration;
 import ma.tiwtiw.bank.entity.Account;
 import ma.tiwtiw.bank.entity.AccountType;
 import ma.tiwtiw.bank.entity.User;

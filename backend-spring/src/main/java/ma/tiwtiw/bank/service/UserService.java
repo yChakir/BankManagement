@@ -1,9 +1,9 @@
 package ma.tiwtiw.bank.service;
 
 import ma.tiwtiw.bank.dto.ChangePassword;
-import ma.tiwtiw.bank.dto.ValidateEmail;
 import ma.tiwtiw.bank.dto.Registration;
 import ma.tiwtiw.bank.dto.ResetPassword;
+import ma.tiwtiw.bank.dto.ValidateEmail;
 import ma.tiwtiw.bank.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 

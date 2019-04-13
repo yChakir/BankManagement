@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import ma.tiwtiw.bank.entity.Account;
 import ma.tiwtiw.bank.entity.AccountType;
 import ma.tiwtiw.bank.entity.User;
+import ma.tiwtiw.bank.exception.ClientException;
 import ma.tiwtiw.bank.exception.ResourceNotFoundException;
 import ma.tiwtiw.bank.pojo.AccountStatus;
 import ma.tiwtiw.bank.repository.AccountRepository;
@@ -65,14 +66,16 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
+  @Transactional(readOnly = true)
   public int countByTypeName(String name) {
     log.debug("countByTypeName() :: name = {}", name);
     return accountRepository.countAllByType_Name(name);
   }
 
   @Override
-  public int countByTypeUsername(String username) {
-    log.debug("countByTypeUsername() :: username = {}", username);
+  @Transactional(readOnly = true)
+  public int countByUsername(String username) {
+    log.debug("countByUsername() :: username = {}", username);
     return accountRepository.countAllByUser_Email(username);
   }
 
@@ -124,11 +127,32 @@ public class AccountServiceImpl implements AccountService {
 
   @Override
   public void approve(Long id) {
-    log.debug("delete() :: id = {}", id);
+    log.debug("approve() :: id = {}", id);
 
     Account account = findById(id);
 
+    if (!account.getStatus().equals(AccountStatus.WAITING_FOR_APPROVAL)) {
+      log.warn("approve() :: account status is not waiting for approval, status = {}", account.getStatus());
+      throw new ClientException(Translator.translate("exception.account.not-waiting-approval"));
+    }
+
     account.setStatus(AccountStatus.APPROVED);
+
+    accountRepository.save(account);
+  }
+
+  @Override
+  public void reject(Long id) {
+    log.debug("reject() :: id = {}", id);
+
+    Account account = findById(id);
+
+    if (!account.getStatus().equals(AccountStatus.WAITING_FOR_APPROVAL)) {
+      log.warn("reject() :: account status is not waiting for approval, status = {}", account.getStatus());
+      throw new ClientException(Translator.translate("exception.account.not-waiting-approval"));
+    }
+
+    account.setStatus(AccountStatus.REJECTED);
 
     accountRepository.save(account);
   }

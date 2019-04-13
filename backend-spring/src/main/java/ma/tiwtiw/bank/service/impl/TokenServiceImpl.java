@@ -25,6 +25,7 @@ public class TokenServiceImpl implements TokenService {
 
   @Override
   public Token saveForUser(User user, TokenType type) {
+    log.debug("saveForUser() :: user = {}, type = {}", user.getEmail(), type);
     return repository.save(new Token(user, type));
   }
 

@@ -87,12 +87,13 @@ public class EmailServiceImpl implements EmailService {
 
   @Override
   public void sendAndSave(Mail mail, Map model) {
+    log.debug("sendAndSave() :: mail = {}, model = {}", mail, model);
     try {
+      log.debug("sendAndSave() :: building the message...");
       MimeMessage message = sender.createMimeMessage();
       MimeMessageHelper helper = new MimeMessageHelper(message,
           MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
           StandardCharsets.UTF_8.name());
-
 
       String templateName = getTemplateNameByMailType(mail.getType());
       Template template = freeMarkerConfiguration.getTemplate(templateName);

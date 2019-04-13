@@ -16,7 +16,7 @@ public interface AccountService {
 
   int countByTypeName(String name);
 
-  int countByTypeUsername(String username);
+  int countByUsername(String username);
 
   void add(String username, String name, Long type);
 
@@ -25,4 +25,6 @@ public interface AccountService {
   void delete(Long id);
 
   void approve(Long id);
+
+  void reject(Long id);
 }

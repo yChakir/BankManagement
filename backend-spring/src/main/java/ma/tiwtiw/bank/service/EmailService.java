@@ -1,7 +1,6 @@
 package ma.tiwtiw.bank.service;
 
 import java.util.Map;
-import javax.mail.MessagingException;
 import ma.tiwtiw.bank.entity.Mail;
 import ma.tiwtiw.bank.event.PasswordResetEvent;
 import ma.tiwtiw.bank.event.RegistrationEvent;
