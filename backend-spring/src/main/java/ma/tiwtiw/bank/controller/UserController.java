@@ -1,7 +1,7 @@
 package ma.tiwtiw.bank.controller;
 
 import javax.validation.Valid;
-import ma.tiwtiw.bank.dto.EmailValidation;
+import ma.tiwtiw.bank.dto.ValidateEmail;
 import ma.tiwtiw.bank.dto.ForgotPassword;
 import ma.tiwtiw.bank.dto.Registration;
 import ma.tiwtiw.bank.dto.ResetPassword;
@@ -29,8 +29,8 @@ public class UserController {
     return ResponseEntity.created(null).build();
   }
 
-  @PostMapping("email-validation")
-  public ResponseEntity emailValidation(@RequestBody @Valid EmailValidation emailValidation) {
+  @PostMapping("validate-email")
+  public ResponseEntity emailValidation(@RequestBody @Valid ValidateEmail emailValidation) {
     userService.emailValidation(emailValidation);
 
     return ResponseEntity.noContent().build();
@@ -38,7 +38,7 @@ public class UserController {
 
   @PostMapping("forgot-password")
   public ResponseEntity forgotPassword(@RequestBody @Valid ForgotPassword forgotPassword) {
-    userService.forgotPassword(forgotPassword.getEmail());
+    userService.forgotPassword(forgotPassword.getUsername());
 
     return ResponseEntity.noContent().build();
   }

@@ -27,7 +27,7 @@
     <td bgcolor="#eaeaea" style="padding: 40px 30px 40px 30px;">
       <p>Dear ${firstName} ${lastName},</p>
       <p>Here is your token to reset your password: ${token}</p>
-      <p>Or you can just follow this link: ${frontEnd}/reset-password?email=${email}&token=${token}</p>
+      <p>Or you can just follow this link: ${frontEnd}/reset-password?username=${username}&token=${token}</p>
       <p>The link and token are valid until: ${expireDate} at ${expireTime}</p>
       <p>Thanks</p>
     </td>

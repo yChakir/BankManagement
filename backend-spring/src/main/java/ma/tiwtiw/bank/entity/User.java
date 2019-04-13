@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
@@ -64,6 +65,9 @@ public class User extends BaseEntity implements UserDetails {
 
   @Column(name = "user_active")
   private boolean active;
+
+  @OneToMany(mappedBy = "user")
+  private List<Account> accounts = new ArrayList<>();
 
   @NotAudited
   @ManyToMany(fetch = FetchType.EAGER)

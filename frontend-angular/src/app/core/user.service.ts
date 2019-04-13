@@ -60,6 +60,18 @@ export class UserService {
     return this.http.post(`${environment.api.url}/api/v1/users/register`, registration);
   }
 
+  public validateEmail(validateEmail: ValidateEmail): Observable<any> {
+    return this.http.post(`${environment.api.url}/api/v1/users/validate-email`, validateEmail);
+  }
+
+  public forgotPassword(forgotPassword: ForgotPassword): Observable<any> {
+    return this.http.post(`${environment.api.url}/api/v1/users/forgot-password`, forgotPassword);
+  }
+
+  public resetPassword(resetPassword: ResetPassword): Observable<any> {
+    return this.http.post(`${environment.api.url}/api/v1/users/reset-password`, resetPassword);
+  }
+
   public getIsAuthenticated(): Observable<boolean> {
     return this.isAuthenticated.asObservable();
   }

@@ -29,7 +29,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Audited
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "PRIVILEGES")
+@Table(name = "RIGHTS")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Right extends BaseEntity {

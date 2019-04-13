@@ -1,8 +1,28 @@
-<p>
-  account-list works!
-  <app-account-details></app-account-details>
-  <app-account-details></app-account-details>
-  <app-account-details></app-account-details>
-  <app-account-details></app-account-details>
-  <app-account-details></app-account-details>
-</p>
+<nz-card>
+  <nz-table #borderedTable nzBordered [nzTitle]="headerTmpl" [nzData]="dataSet">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Address</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of borderedTable.data">
+      <td>{{ data.name }}</td>
+      <td>{{ data.age }}</td>
+      <td>{{ data.address }}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #headerTmpl>
+  <div style="height: 25px;">
+
+  <div style="float: left;">
+    Accounts
+  </div>
+  <button style="float: right;" nz-button class="form-button" [nzType]="'primary'" [nzLoading]="loading">Add</button>
+  </div>
+</ng-template>

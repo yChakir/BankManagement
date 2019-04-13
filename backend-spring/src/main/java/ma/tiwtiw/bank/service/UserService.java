@@ -1,7 +1,7 @@
 package ma.tiwtiw.bank.service;
 
 import ma.tiwtiw.bank.dto.ChangePassword;
-import ma.tiwtiw.bank.dto.EmailValidation;
+import ma.tiwtiw.bank.dto.ValidateEmail;
 import ma.tiwtiw.bank.dto.Registration;
 import ma.tiwtiw.bank.dto.ResetPassword;
 import ma.tiwtiw.bank.entity.User;
@@ -15,7 +15,7 @@ public interface UserService extends UserDetailsService {
 
   void delete(String email);
 
-  void emailValidation(EmailValidation emailValidation);
+  void emailValidation(ValidateEmail emailValidation);
 
   void forgotPassword(String email);
 

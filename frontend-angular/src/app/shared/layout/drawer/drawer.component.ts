@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {LayoutService} from "../../../core/layout.service";
 import {UserService} from "../../../core/user.service";
+import {Router} from "@angular/router";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-drawer',
@@ -13,9 +15,12 @@ export class DrawerComponent implements OnInit {
 
   isAuthenticated: boolean = false;
 
+  routes: Object = environment.routes;
+
   constructor(
     private authService: UserService,
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -24,4 +29,7 @@ export class DrawerComponent implements OnInit {
     this.authService.getIsAuthenticated().subscribe(value => this.isAuthenticated = value);
   }
 
+  get selected(): string {
+    return this.router.url;
+  }
 }

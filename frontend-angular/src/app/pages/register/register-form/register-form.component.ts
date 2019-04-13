@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../core/user.service";
 import {NzMessageService} from "ng-zorro-antd";
 import {Router} from "@angular/router";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-register-form',
@@ -13,11 +14,13 @@ export class RegisterFormComponent implements OnInit {
 
   loading: boolean = false;
 
+  routes: Object = environment.routes;
+
   form: FormGroup = this.builder.group({
     firstName: this.builder.control('', [Validators.required]),
     lastName: this.builder.control('', [Validators.required]),
     username: this.builder.control('', [Validators.required, Validators.email]),
-    password: this.builder.control('', [Validators.required, Validators.minLength(6)]),
+    password: this.builder.control('', [Validators.required, Validators.minLength(8)]),
   });
 
   constructor(
@@ -38,7 +41,7 @@ export class RegisterFormComponent implements OnInit {
     .subscribe(
       () => {
         this.messageService.success("Successful registration !");
-        this.router.navigateByUrl('/validate-email');
+        this.router.navigate([environment.routes.validateEmail], {queryParams: {username: this.form.controls.username.value}});
         this.loading = false;
       },
       response => {
@@ -47,7 +50,5 @@ export class RegisterFormComponent implements OnInit {
         this.loading = false;
       }
     );
-
   }
-
 }

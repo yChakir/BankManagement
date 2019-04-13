@@ -1,11 +1,11 @@
-.register-form {
+.form {
   width: 100%;
 }
 
-.register-form-forgot {
+.form-right {
   float: right;
 }
 
-.register-form-button {
+.form-button {
   width: 100%;
 }

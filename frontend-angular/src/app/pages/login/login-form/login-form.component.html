@@ -1,4 +1,4 @@
-<form nz-form [formGroup]="form" class="login-form" (ngSubmit)="submit()">
+<form nz-form [formGroup]="form" class="form" (ngSubmit)="submit()">
   <nz-form-item>
     <nz-form-control>
       <nz-input-group [nzPrefix]="prefixUser">
@@ -21,8 +21,8 @@
   </nz-form-item>
   <nz-form-item style="margin-bottom: 0;">
     <nz-form-control>
-      <a [routerLink]="routes.forgotPassword" class="login-form-forgot">Forgot password</a>
-      <button nz-button class="login-form-button" [nzType]="'primary'" [nzLoading]="loading" [disabled]="!form.valid">Log in</button>
+      <a [routerLink]="routes.forgotPassword" class="form-right">Forgot password</a>
+      <button nz-button class="form-button" [nzType]="'primary'" [nzLoading]="loading" [disabled]="!form.valid">Log in</button>
       Or
       <a [routerLink]="routes.register">register now!</a>
     </nz-form-control>

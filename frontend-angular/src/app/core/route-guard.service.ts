@@ -19,12 +19,60 @@ export class RouteGuardService implements CanActivate {
     switch (state.url) {
       case environment.routes.login:
         return this.canActivateLogin();
+      case environment.routes.register:
+        return this.canActivateRegister();
+      case environment.routes.forgotPassword:
+        return this.canActivateForgotPassword();
+      case  environment.routes.validateEmail:
+        return this.canActivateValidateEmail();
+      case environment.routes.resetPassword:
+        return this.canActivateResetPassword();
       default:
-        return false;
+        return true;
     }
   }
 
   canActivateLogin(): boolean | UrlTree {
+    let result: boolean | UrlTree = true;
+
+    if (this.userService.getCurrentAuthenticationState()) {
+      result = this.router.parseUrl(environment.routes.accounts);
+    }
+
+    return result;
+  }
+
+  canActivateRegister(): boolean | UrlTree {
+    let result: boolean | UrlTree = true;
+
+    if (this.userService.getCurrentAuthenticationState()) {
+      result = this.router.parseUrl(environment.routes.accounts);
+    }
+
+    return result;
+  }
+
+  canActivateForgotPassword(): boolean | UrlTree {
+    let result: boolean | UrlTree = true;
+
+    if (this.userService.getCurrentAuthenticationState()) {
+      result = this.router.parseUrl(environment.routes.accounts);
+    }
+
+    return result;
+  }
+
+  canActivateValidateEmail(): boolean | UrlTree {
+    let result: boolean | UrlTree = true;
+
+    if (this.userService.getCurrentAuthenticationState()) {
+      result = this.router.parseUrl(environment.routes.accounts);
+    }
+
+    return result;
+  }
+
+  canActivateResetPassword(): boolean | UrlTree {
     let result: boolean | UrlTree = true;
 
     if (this.userService.getCurrentAuthenticationState()) {

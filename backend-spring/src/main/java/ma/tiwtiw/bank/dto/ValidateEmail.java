@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmailValidation {
+public class ValidateEmail {
 
   @Email
   @NotBlank
   @Size(min = 3, max = 100)
-  private String email;
+  private String username;
 
   @NotBlank
   @Size(min = 30, max = 50)

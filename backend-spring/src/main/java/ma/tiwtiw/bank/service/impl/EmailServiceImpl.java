@@ -17,7 +17,6 @@ import ma.tiwtiw.bank.service.EmailService;
 import ma.tiwtiw.bank.util.Translator;
 import org.springframework.context.event.EventListener;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -46,14 +45,14 @@ public class EmailServiceImpl implements EmailService {
 
     Mail mail = new Mail();
     mail.setTo(event.getToken().getUser().getEmail());
-    mail.setSubject(Translator.translate("username.registration.title"));
+    mail.setSubject(Translator.translate("mail.validate-email.title"));
     mail.setType(MailType.VALIDATE_EMAIL);
 
     Map model = new HashMap();
 
     model.put("firstName", event.getToken().getUser().getFirstName());
     model.put("lastName", event.getToken().getUser().getLastName());
-    model.put("email", event.getToken().getUser().getEmail());
+    model.put("username", event.getToken().getUser().getEmail());
     model.put("token", event.getToken().getToken());
     model.put("expireDate", event.getToken().getExpireDate().toLocalDate());
     model.put("expireTime", event.getToken().getExpireDate().toLocalTime());
@@ -70,14 +69,14 @@ public class EmailServiceImpl implements EmailService {
 
     Mail mail = new Mail();
     mail.setTo(event.getToken().getUser().getEmail());
-    mail.setSubject(Translator.translate("username.forgot-password.title"));
+    mail.setSubject(Translator.translate("mail.forgot-password.title"));
     mail.setType(MailType.FORGOT_PASSWORD);
 
     Map model = new HashMap();
 
     model.put("firstName", event.getToken().getUser().getFirstName());
     model.put("lastName", event.getToken().getUser().getLastName());
-    model.put("email", event.getToken().getUser().getEmail());
+    model.put("username", event.getToken().getUser().getEmail());
     model.put("token", event.getToken().getToken());
     model.put("expireDate", event.getToken().getExpireDate().toLocalDate());
     model.put("expireTime", event.getToken().getExpireDate().toLocalTime());
@@ -104,7 +103,6 @@ public class EmailServiceImpl implements EmailService {
       helper.setTo(mail.getTo());
       helper.setSubject(mail.getSubject());
       helper.setText(html, true);
-//      helper.addInline("logo.png", new ClassPathResource("static/image/default.png"));
 
       log.debug("sendAndSave() :: Sending username = {}", mail);
       sender.send(message);
@@ -121,9 +119,9 @@ public class EmailServiceImpl implements EmailService {
   private String getTemplateNameByMailType(MailType type) {
     switch (type) {
       case VALIDATE_EMAIL:
-        return AppConstants.VALIDATE_EMAIL_EMAIL;
+        return AppConstants.VALIDATE_EMAIL_MAIL;
       case FORGOT_PASSWORD:
-        return AppConstants.FORGOT_PASSWORD_EMAIL;
+        return AppConstants.FORGOT_PASSWORD_MAIL;
       default:
         return null;
     }

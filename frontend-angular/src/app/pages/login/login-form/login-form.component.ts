@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../core/user.service";
 import {NzMessageService} from "ng-zorro-antd";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Route, Router} from "@angular/router";
 import {environment} from "../../../../environments/environment";
 
 @Component({
@@ -19,19 +19,25 @@ export class LoginFormComponent implements OnInit {
   routes: Object = environment.routes;
 
   form: FormGroup = this.builder.group({
-    username: this.builder.control('yassine.chakir@ilemgroup.com', [Validators.required, Validators.email]),
-    password: this.builder.control('password', [Validators.required, Validators.minLength(6)]),
+    username: this.builder.control('', [Validators.required, Validators.email]),
+    password: this.builder.control('', [Validators.required, Validators.minLength(8)]),
   });
 
   constructor(
     private authService: UserService,
     private builder: FormBuilder,
     private messageService: NzMessageService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params.username) {
+        this.form.controls.username.setValue(params.username);
+      }
+    });
     this.isAuthenticated = this.authService.getCurrentAuthenticationState();
     this.authService.getIsAuthenticated().subscribe(value => this.isAuthenticated = value);
   }

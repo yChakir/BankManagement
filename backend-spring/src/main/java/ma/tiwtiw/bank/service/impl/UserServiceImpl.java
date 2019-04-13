@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import ma.tiwtiw.bank.dto.ChangePassword;
-import ma.tiwtiw.bank.dto.EmailValidation;
 import ma.tiwtiw.bank.dto.Registration;
 import ma.tiwtiw.bank.dto.ResetPassword;
+import ma.tiwtiw.bank.dto.ValidateEmail;
 import ma.tiwtiw.bank.entity.Token;
 import ma.tiwtiw.bank.entity.User;
 import ma.tiwtiw.bank.event.PasswordResetEvent;
@@ -84,7 +84,10 @@ public class UserServiceImpl implements UserService {
   public User findByEmail(String email) {
     log.debug("findByEmail() :: username = {}", email);
     return repository.findByEmail(email).orElseThrow(
-        () -> new UsernameNotFoundException(Translator.translate("exception.user.not-found")));
+        () -> {
+          log.warn("findByEmail() :: No user with email = {}", email);
+          return new UsernameNotFoundException(Translator.translate("exception.user.not-found"));
+        });
   }
 
   @Override
@@ -98,7 +101,7 @@ public class UserServiceImpl implements UserService {
       throw new ClientException(Translator.translate("exception.user.already-deleted"));
     }
 
-    // todo(Yassine) handle dependencies...
+    // todo handle dependencies...
 
     user.setDeleted(true);
 
@@ -133,14 +136,14 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void emailValidation(EmailValidation emailValidation) {
+  public void emailValidation(ValidateEmail emailValidation) {
     log.debug("emailValidation() :: emailValidation = {}", emailValidation);
     Optional<User> optionalUser = repository
-        .findByEmail(emailValidation.getEmail());
+        .findByEmail(emailValidation.getUsername());
 
-    log.debug("emailValidation() :: check user exists: {}", emailValidation.getEmail());
+    log.debug("emailValidation() :: check user exists: {}", emailValidation.getUsername());
     User user = optionalUser.orElseThrow(() -> {
-      log.debug("emailValidation() :: check user exists: {}", emailValidation.getEmail());
+      log.debug("emailValidation() :: check user exists: {}", emailValidation.getUsername());
       return new ClientException(Translator.translate("exception.token.invalid"));
     });
 
@@ -208,7 +211,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public void resetPassword(ResetPassword resetPassword) {
     log.debug("resetPassword() :: resetPassword = {}", resetPassword);
-    Optional<User> optionalUser = repository.findByEmail(resetPassword.getEmail());
+    Optional<User> optionalUser = repository.findByEmail(resetPassword.getUsername());
 
     User user = optionalUser.orElseThrow(
         () -> {

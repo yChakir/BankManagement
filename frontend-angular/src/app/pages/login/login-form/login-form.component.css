@@ -1,11 +1,11 @@
-.login-form {
+.form {
   width: 100%;
 }
 
-.login-form-forgot {
+.form-right {
   float: right;
 }
 
-.login-form-button {
+.form-button {
   width: 100%;
 }

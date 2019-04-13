@@ -1,3 +1,11 @@
-<p>
-  validate-email-page works!
-</p>
+<nz-layout>
+  <nz-content>
+    <div nz-row nzType="flex" nzJustify="center" nzAlign="middle" [style.margin-top]="marginTop">
+      <div nz-col nzXs="24" nzSm="14" nzMd="12" nzLg="8" nzXl="6">
+        <nz-card nzTitle="Validate Email" [style.height]="height">
+          <app-validate-email-form></app-validate-email-form>
+        </nz-card>
+      </div>
+    </div>
+  </nz-content>
+</nz-layout>

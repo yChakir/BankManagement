@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ValidateEmailPageComponent implements OnInit {
 
+  marginTop: string = '6%';
+
   constructor() { }
 
   ngOnInit() {
