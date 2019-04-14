@@ -113,24 +113,24 @@
       </td>
       <td>
         <ng-container *ngIf="editIndex !== i.id">
-          {{i.created}}
+          {{i.created | date: 'medium'}}
         </ng-container>
         <ng-container *ngIf="editIndex === i.id">
           <nz-form-item>
             <nz-form-control nzHasFeedback>
-              {{i.created}}
+              {{i.created | date: 'medium'}}
             </nz-form-control>
           </nz-form-item>
         </ng-container>
       </td>
       <td>
         <ng-container *ngIf="editIndex !== i.id">
-          {{i.updated}}
+          {{i.updated | date: 'medium'}}
         </ng-container>
         <ng-container *ngIf="editIndex === i.id">
           <nz-form-item>
             <nz-form-control nzHasFeedback>
-              {{i.updated}}
+              {{i.updated | date: 'medium'}}
             </nz-form-control>
           </nz-form-item>
         </ng-container>
