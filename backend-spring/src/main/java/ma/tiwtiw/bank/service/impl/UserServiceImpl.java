@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Optional;
 import javax.jws.soap.SOAPBinding.Use;
 import lombok.extern.slf4j.Slf4j;
+import ma.tiwtiw.bank.configuration.AppConstants;
 import ma.tiwtiw.bank.dto.ChangePassword;
 import ma.tiwtiw.bank.dto.Registration;
 import ma.tiwtiw.bank.dto.ResetPassword;
 import ma.tiwtiw.bank.dto.ValidateEmail;
+import ma.tiwtiw.bank.entity.Role;
 import ma.tiwtiw.bank.entity.Token;
 import ma.tiwtiw.bank.entity.User;
 import ma.tiwtiw.bank.event.PasswordResetEvent;
@@ -16,6 +18,7 @@ import ma.tiwtiw.bank.event.RegistrationEvent;
 import ma.tiwtiw.bank.exception.ClientException;
 import ma.tiwtiw.bank.pojo.TokenType;
 import ma.tiwtiw.bank.repository.UserRepository;
+import ma.tiwtiw.bank.service.RoleService;
 import ma.tiwtiw.bank.service.TokenService;
 import ma.tiwtiw.bank.service.UserService;
 import ma.tiwtiw.bank.util.Translator;
@@ -45,6 +48,8 @@ public class UserServiceImpl implements UserService {
 
   private ConversionService conversionService;
 
+  private RoleService roleService;
+
   public UserServiceImpl(
       UserRepository repository,
       TokenService tokenService,
@@ -60,6 +65,11 @@ public class UserServiceImpl implements UserService {
   @Autowired
   public void setConversionService(ConversionService conversionService) {
     this.conversionService = conversionService;
+  }
+
+  @Autowired
+  public void setRoleService(RoleService roleService) {
+    this.roleService = roleService;
   }
 
   @Override
@@ -175,6 +185,9 @@ public class UserServiceImpl implements UserService {
     log.debug("emailValidation() :: updating and saving user and token...");
     token.setUsed(true);
     user.setActive(true);
+
+    Optional<Role> role = roleService.findByName(AppConstants.ACTIVATED_ROLE_NAME);
+    role.ifPresent(user.getRoles()::add);
 
     tokenService.save(token);
     return repository.save(user);

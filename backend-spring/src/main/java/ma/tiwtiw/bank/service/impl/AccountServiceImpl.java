@@ -75,6 +75,7 @@ public class AccountServiceImpl implements AccountService {
     Account account = new Account();
 
     account.setUser(user);
+    account.setName(name);
     account.setType(accountType);
     account.setStatus(AccountStatus.WAITING_FOR_APPROVAL);
 

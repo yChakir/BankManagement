@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import ma.tiwtiw.bank.configuration.AppConstants;
 import ma.tiwtiw.bank.entity.Right;
 import ma.tiwtiw.bank.entity.Role;
 import ma.tiwtiw.bank.exception.ClientException;
@@ -12,7 +13,6 @@ import ma.tiwtiw.bank.pojo.RightEnum;
 import ma.tiwtiw.bank.repository.RoleRepository;
 import ma.tiwtiw.bank.service.RightService;
 import ma.tiwtiw.bank.service.RoleService;
-import ma.tiwtiw.bank.service.UserService;
 import ma.tiwtiw.bank.util.Translator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,6 +87,16 @@ public class RoleServiceImpl implements RoleService {
 
     Role role = findById(id);
 
+    if (role.getName().equals(AppConstants.ADMIN_ROLE_NAME)) {
+      throw new ClientException(Translator.translate("exception.role.update-admin"));
+    }
+    if (
+        role.getName().equals(AppConstants.ACTIVATED_ROLE_NAME) &&
+        !name.equals(AppConstants.ACTIVATED_ROLE_NAME)
+    ) {
+      throw new ClientException(Translator.translate("exception.role.update-activated-name"));
+    }
+
     List<Right> rights = rightEnums.stream()
         .map(rightService::findByRightEnum)
         .collect(Collectors.toList());
@@ -102,6 +112,14 @@ public class RoleServiceImpl implements RoleService {
   public Role delete(Long id) {
     log.debug("delete() :: id = {}", id);
     Role role = findById(id);
+
+    if (role.getName().equals(AppConstants.ADMIN_ROLE_NAME)) {
+      throw new ClientException(Translator.translate("exception.role.delete-admin"));
+    }
+
+    if (role.getName().equals(AppConstants.ACTIVATED_ROLE_NAME)) {
+      throw new ClientException(Translator.translate("exception.role.delete-activated"));
+    }
 
     role.setDeleted(true);
 

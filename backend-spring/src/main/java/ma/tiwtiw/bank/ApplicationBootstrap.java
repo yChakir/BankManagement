@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import ma.tiwtiw.bank.configuration.AppConstants;
 import ma.tiwtiw.bank.dto.Registration;
 import ma.tiwtiw.bank.entity.Role;
+import ma.tiwtiw.bank.entity.User;
 import ma.tiwtiw.bank.exception.ResourceNotFoundException;
 import ma.tiwtiw.bank.pojo.RightEnum;
 import ma.tiwtiw.bank.service.RightService;
@@ -48,20 +49,28 @@ public class ApplicationBootstrap implements ApplicationListener<ApplicationRead
       registration.setFirstName(AppConstants.ADMIN_ROLE_NAME);
       registration.setLastName(AppConstants.ADMIN_ROLE_NAME);
 
-      userService.register(registration);
+      User user = userService.register(registration);
+      Optional<Role> optionalRole = roleService.findByName(AppConstants.ADMIN_ROLE_NAME);
+      optionalRole.ifPresent(user.getRoles()::add);
     }
   }
 
   private void assertAdminRole() {
     log.debug("assertAdminRole() :: start");
-    Optional<Role> optional = roleService.findByName(AppConstants.ADMIN_ROLE_NAME);
+    Optional<Role> optionalAdmin = roleService.findByName(AppConstants.ADMIN_ROLE_NAME);
 
-    if (!optional.isPresent()) {
+    if (!optionalAdmin.isPresent()) {
       log.debug("assertAdminRole() :: admin role not found, create it");
       Role role = roleService.add(AppConstants.ADMIN_ROLE_NAME, new ArrayList<>());
       roleService.update(role.getId(), role.getName(), new ArrayList<RightEnum>() {{
         add(RightEnum.ALL_RIGHTS);
       }});
+    }
+    Optional<Role> optionalActivated = roleService.findByName(AppConstants.ACTIVATED_ROLE_NAME);
+
+    if (!optionalActivated.isPresent()) {
+      log.debug("assertAdminRole() :: activated role not found, create it");
+      roleService.add(AppConstants.ACTIVATED_ROLE_NAME, new ArrayList<>());
     }
   }
 

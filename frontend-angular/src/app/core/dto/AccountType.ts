@@ -1,4 +1,5 @@
 export class AccountType {
+  id: number;
   name: string;
   created: Date;
   updated: Date;

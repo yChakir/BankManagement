@@ -101,7 +101,7 @@
                 nz-button><i class="anticon anticon-edit"></i></button></span>
             <span nz-tooltip [nzTitle]="'Delete'"><button
               nz-popconfirm
-              nzTitle="Are you sure to delete this role ?" (nzOnConfirm)="delete(i)"
+              nzTitle="Are you sure to delete this account type ?" (nzOnConfirm)="delete(i)"
               [nzLoading]="deleting[i.id]"
               nz-button nzType="danger"><i class="anticon anticon-delete"></i></button></span>
           </nz-button-group>
@@ -109,7 +109,7 @@
             <nz-form-control>
               <nz-button-group>
                   <span nz-tooltip nzTitle="Validate">
-                    <button nz-popconfirm nzTitle="Are you sure to edit this role ?"
+                    <button nz-popconfirm nzTitle="Are you sure to edit this account type ?"
                             (nzOnConfirm)="validate(i)" [nzLoading]="validating[i.id]" nz-button
                             [disabled]="!editForm.dirty || !editForm.valid">
                     <i class="anticon anticon-check"></i>

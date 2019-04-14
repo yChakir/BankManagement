@@ -13,4 +13,6 @@ public interface AppConstants {
   String ADMIN_PASSWORD = "password";
 
   String ADMIN_ROLE_NAME = "ADMIN";
+
+  String ACTIVATED_ROLE_NAME = "ACTIVATED";
 }
