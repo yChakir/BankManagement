@@ -51,13 +51,13 @@ export class AccountListComponent implements OnInit {
 
   canAdd: boolean = this.securityService.hasAddAccount;
 
-  canUpdate: boolean = this.securityService.hasAddAccount;
+  canUpdate: boolean = this.securityService.hasUpdateAccount;
 
   canApprove: boolean = this.securityService.hasApproveAccount;
 
   canDecline : boolean = this.securityService.hasDeclineAccount;
 
-  canDelete: boolean = this.securityService.hasAddAccount;
+  canDelete: boolean = this.securityService.hasDeleteAccount;
 
 
   addForm: FormGroup = this.builder.group({
@@ -104,10 +104,10 @@ export class AccountListComponent implements OnInit {
 
     switch (this.idx) {
       case 0:
-        observable = this.accountService.findAll();
+        observable = this.accountService.findOwn();
         break;
       case 1:
-        observable = this.accountService.findOwn();
+        observable = this.accountService.findAll();
         break;
       case 2:
         observable = this.accountService.findWaitingApproval();

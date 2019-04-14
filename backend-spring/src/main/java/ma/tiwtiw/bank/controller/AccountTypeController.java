@@ -30,7 +30,7 @@ public class AccountTypeController {
   }
 
   @GetMapping
-  @PreAuthorize("hasAnyAuthority('SHOW_ACCOUNT_TYPES', 'ALL_RIGHTS')")
+  @PreAuthorize("hasAnyAuthority('SHOW_ACCOUNT_TYPES', 'ADD_ACCOUNT', 'ALL_RIGHTS')")
   public ResponseEntity<List<AccountType>> findAll() {
     List<AccountType> result = accountTypeService.findAll();
 

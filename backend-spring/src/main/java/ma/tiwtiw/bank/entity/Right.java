@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString.Exclude;
 import ma.tiwtiw.bank.pojo.RightEnum;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
@@ -52,6 +53,7 @@ public class Right extends BaseEntity {
   @JsonIgnore
   @NotAudited
   @ManyToMany
+  @Exclude
   @JoinTable(name = "ROLES_RIGHTS", joinColumns = {
       @JoinColumn(name = "right_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
   private List<Role> roles = new ArrayList<>();

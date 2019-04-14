@@ -7,7 +7,7 @@
     <a [routerLink]="routes.accountType"><i nz-icon type="contacts"></i><span
       class="nav-text">account types</span></a>
   </li>
-  <li *ngIf="canShowAccount || hasAllRights" nz-menu-item [nzSelected]="selected === routes.accounts">
+  <li *ngIf="canShowAccount || canShowAccountOwn || canShowAccountWaitingApproval || hasAllRights" nz-menu-item [nzSelected]="selected === routes.accounts">
     <a [routerLink]="routes.accounts"><i nz-icon type="contacts"></i><span
       class="nav-text">accounts</span></a>
   </li>

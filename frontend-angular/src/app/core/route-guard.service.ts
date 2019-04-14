@@ -125,12 +125,13 @@ export class RouteGuardService implements CanActivate {
   canActivateAccounts() {
     let result: boolean | UrlTree = true;
     if (
-      !this.userService.getCurrentAuthenticationState() && (
-        !this.securityService.hasShowAccounts &&
-        !this.securityService.hasShowAccountsOwn &&
-        !this.securityService.hasShowAccountsWaitingApproval &&
-        !this.securityService.hasAllRights
-      )
+      !this.userService.getCurrentAuthenticationState()
+      // && (
+        // !this.securityService.hasShowAccounts &&
+        // !this.securityService.hasShowAccountsOwn &&
+        // !this.securityService.hasShowAccountsWaitingApproval &&
+        // !this.securityService.hasAllRights
+      // )
     ) {
       result = this.router.parseUrl(environment.routes.login);
     }

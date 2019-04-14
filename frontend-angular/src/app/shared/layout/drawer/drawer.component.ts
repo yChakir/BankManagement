@@ -20,17 +20,21 @@ export class DrawerComponent implements OnInit {
 
   canShowProfile: boolean = this.securityService.hasShowProfile;
 
-  canShowUser: boolean = this.securityService.hasShowProfile;
+  canShowUser: boolean = this.securityService.hasShowUsers;
 
-  canShowAccountType: boolean = this.securityService.hasShowProfile;
+  canShowAccountType: boolean = this.securityService.hasShowAccountTypes;
 
-  canShowAccount: boolean = this.securityService.hasShowProfile;
+  canShowAccount: boolean = this.securityService.hasShowAccounts;
 
-  canShowRole: boolean = this.securityService.hasShowProfile;
+  canShowAccountOwn: boolean = this.securityService.hasShowAccountsOwn;
 
-  canShowRight: boolean = this.securityService.hasShowProfile;
+  canShowAccountWaitingApproval: boolean = this.securityService.hasShowAccountsWaitingApproval;
 
-  canShowHistory: boolean = this.securityService.hasShowProfile;
+  canShowRole: boolean = this.securityService.hasShowRoles;
+
+  canShowRight: boolean = this.securityService.hasShowRights;
+
+  canShowHistory: boolean = this.securityService.hasShowHistory;
 
   hasAllRights: boolean = this.securityService.hasAllRights;
 
@@ -55,6 +59,8 @@ export class DrawerComponent implements OnInit {
     this.securityService.hasShowUsers$.subscribe(value => this.canShowUser = value);
     this.securityService.hasShowAccountTypes$.subscribe(value => this.canShowAccountType = value);
     this.securityService.hasShowAccounts$.subscribe(value => this.canShowAccount = value);
+    this.securityService.hasShowAccountsOwn$.subscribe(value => this.canShowAccountOwn = value);
+    this.securityService.hasShowAccountsWaitingApproval$.subscribe(value => this.canShowAccountWaitingApproval = value);
     this.securityService.hasShowRoles$.subscribe(value => this.canShowRole = value);
     this.securityService.hasShowRights$.subscribe(value => this.canShowRight = value);
     this.securityService.hasShowHistory$.subscribe(value => this.canShowHistory = value);

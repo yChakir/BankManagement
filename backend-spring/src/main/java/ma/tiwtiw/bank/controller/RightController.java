@@ -29,7 +29,7 @@ public class RightController {
   }
 
   @GetMapping
-  @PreAuthorize("hasAuthority('SHOW_RIGHTS')")
+  @PreAuthorize("hasAnyAuthority('SHOW_RIGHTS', 'ALL_RIGHTS')")
   public ResponseEntity<List<Right>> findAll() {
     List<Right> result = rightService.findAll();
 
