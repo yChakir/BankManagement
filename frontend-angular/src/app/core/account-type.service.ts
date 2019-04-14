@@ -15,11 +15,11 @@ export class AccountTypeService {
   }
 
   public findAll(): Observable<AccountType[]> {
-    return this.http.get(`${environment.api.url}/api/v1/account-type`);
+    return this.http.get<AccountType[]>(`${environment.api.url}/api/v1/account-type`);
   }
 
   public add(dto: AddAccountType) {
-    return this.http.post(`${environment.api.url}/api/v1/account-type`, dto);
+  return this.http.post(`${environment.api.url}/api/v1/account-type`, dto);
   }
 
   public update(id: number, dto: UpdateAccountType) {

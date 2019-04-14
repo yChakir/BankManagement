@@ -8,6 +8,7 @@ import ma.tiwtiw.bank.entity.AccountType;
 import ma.tiwtiw.bank.service.AccountTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class AccountTypeController {
   }
 
   @GetMapping
+  @PreAuthorize("hasAnyAuthority('SHOW_ACCOUNT_TYPES', 'ALL_RIGHTS')")
   public ResponseEntity<List<AccountType>> findAll() {
     List<AccountType> result = accountTypeService.findAll();
 
@@ -36,6 +38,7 @@ public class AccountTypeController {
   }
 
   @PostMapping
+  @PreAuthorize("hasAnyAuthority('ADD_ACCOUNT_TYPE', 'ALL_RIGHTS')")
   public ResponseEntity add(@RequestBody @Valid AddAccountType addAccountType) {
     accountTypeService.add(addAccountType.getName());
 
@@ -43,6 +46,7 @@ public class AccountTypeController {
   }
 
   @PutMapping("{id}")
+  @PreAuthorize("hasAnyAuthority('UPDATE_ACCOUNT_TYPE', 'ALL_RIGHTS')")
   public ResponseEntity update(
       @PathVariable Long id,
       @RequestBody @Valid UpdateAccountType updateAccountType
@@ -53,6 +57,7 @@ public class AccountTypeController {
   }
 
   @DeleteMapping("{id}")
+  @PreAuthorize("hasAnyAuthority('DELETE_ACCOUNT_TYPE', 'ALL_RIGHTS')")
   public ResponseEntity delete(@PathVariable Long id) {
     accountTypeService.delete(id);
 

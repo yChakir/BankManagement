@@ -16,15 +16,15 @@ export class AccountsService {
   }
 
   public findAll(): Observable<Account[]> {
-    return this.http.get(`${environment.api.url}/api/v1/accounts/own`);
+    return this.http.get<Account[]>(`${environment.api.url}/api/v1/accounts/own`);
   }
 
   public findOwn(): Observable<Account[]> {
-    return this.http.get(`${environment.api.url}/api/v1/accounts/own`);
+    return this.http.get<Account[]>(`${environment.api.url}/api/v1/accounts/own`);
   }
 
   public findWaitingApproval(): Observable<Account[]> {
-    return this.http.get(`${environment.api.url}/api/v1/accounts/waiting-for-approval`);
+    return this.http.get<Account[]>(`${environment.api.url}/api/v1/accounts/waiting-for-approval`);
   }
 
   public add(dto: AddAccount) {

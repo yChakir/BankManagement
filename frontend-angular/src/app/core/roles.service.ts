@@ -15,7 +15,7 @@ export class RolesService {
   }
 
   public findAll(): Observable<Role[]> {
-    return this.http.get(`${environment.api.url}/api/v1/roles`);
+    return this.http.get<Role[]>(`${environment.api.url}/api/v1/roles`);
   }
 
   public add(role: AddRole) {

@@ -95,7 +95,7 @@ export class RightsPageComponent implements OnInit {
     this.service.deactivate(right.name).subscribe(() => {
       this.activating[id] = false;
       this.messageService.success(`The Right '${right.name}' has been deactivated.`);
-      this.load();
+      this.fetch();
     }, response => {
       this.activating[id] = false;
       this.messageService.error(response.error.message);

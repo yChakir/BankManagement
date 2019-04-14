@@ -13,7 +13,7 @@ export class RightsService {
   ) { }
 
   public findAll(): Observable<Right[]> {
-    return this.http.get(`${environment.api.url}/api/v1/rights`);
+    return this.http.get<Right[]>(`${environment.api.url}/api/v1/rights`);
   }
 
   public activate(name: string): Observable<any> {

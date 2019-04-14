@@ -10,6 +10,7 @@ import ma.tiwtiw.bank.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ public class RoleController {
   }
 
   @GetMapping
+  @PreAuthorize("hasAnyAuthority('SHOW_ROLES', 'ALL_RIGHTS')")
   public ResponseEntity<List<Role>> findAll() {
     List<Role> result = roleService.findAll();
 
@@ -38,6 +40,7 @@ public class RoleController {
   }
 
   @PostMapping
+  @PreAuthorize("hasAnyAuthority('ADD_ROLE', 'ALL_RIGHTS')")
   public ResponseEntity add(@RequestBody @Valid AddRole addRole) {
     roleService.add(addRole.getName(), addRole.getRights());
 
@@ -45,6 +48,7 @@ public class RoleController {
   }
 
   @PutMapping("{id}")
+  @PreAuthorize("hasAnyAuthority('UPDATE_ROLE', 'ALL_RIGHTS')")
   public ResponseEntity update(
       @PathVariable Long id,
       @RequestBody @Valid EditRole editRole
@@ -55,7 +59,8 @@ public class RoleController {
   }
 
   @DeleteMapping("{id}")
-  public ResponseEntity update(
+  @PreAuthorize("hasAnyAuthority('DELETE_ROLE', 'ALL_RIGHTS')")
+  public ResponseEntity delete(
       @PathVariable Long id
   ) {
     roleService.delete(id);

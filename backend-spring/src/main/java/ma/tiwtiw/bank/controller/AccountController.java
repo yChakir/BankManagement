@@ -10,6 +10,7 @@ import ma.tiwtiw.bank.pojo.AccountStatus;
 import ma.tiwtiw.bank.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ public class AccountController {
   }
 
   @GetMapping
+  @PreAuthorize("hasAnyAuthority('SHOW_ACCOUNTS', 'ALL_RIGHTS')")
   public ResponseEntity<List<Account>> findAll() {
     List<Account> result = accountService.findAll();
 
@@ -38,6 +40,7 @@ public class AccountController {
   }
 
   @GetMapping("own")
+  @PreAuthorize("hasAnyAuthority('SHOW_ACCOUNTS_OWN', 'ALL_RIGHTS')")
   public ResponseEntity<List<Account>> findAll(Principal principal) {
     List<Account> result = accountService.findAll(principal.getName());
 
@@ -45,6 +48,7 @@ public class AccountController {
   }
 
   @GetMapping("waiting-for-approval")
+  @PreAuthorize("hasAnyAuthority('SHOW_ACCOUNTS_WAITING_FOR_APPROVAL', 'ALL_RIGHTS')")
   public ResponseEntity<List<Account>> findAllApproved() {
     List<Account> result = accountService.findAll(AccountStatus.WAITING_FOR_APPROVAL);
 
@@ -52,6 +56,7 @@ public class AccountController {
   }
 
   @PostMapping
+  @PreAuthorize("hasAnyAuthority('ADD_ACCOUNT', 'ALL_RIGHTS')")
   public ResponseEntity add(
       @RequestBody @Valid AddAccount addAccount,
       Principal principal
@@ -62,6 +67,7 @@ public class AccountController {
   }
 
   @PutMapping("{id}")
+  @PreAuthorize("hasAnyAuthority('UPDATE_ACCOUNT', 'ALL_RIGHTS')")
   public ResponseEntity update(
       @PathVariable Long id,
       @RequestBody @Valid UpdateAccount updateAccount
@@ -72,6 +78,7 @@ public class AccountController {
   }
 
   @DeleteMapping("{id}")
+  @PreAuthorize("hasAnyAuthority('DELETE_ACCOUNT', 'ALL_RIGHTS')")
   public ResponseEntity delete(@PathVariable Long id) {
     accountService.delete(id);
 
@@ -79,6 +86,7 @@ public class AccountController {
   }
 
   @PutMapping("{id}/approve")
+  @PreAuthorize("hasAnyAuthority('APPROVE_ACCOUNT', 'ALL_RIGHTS')")
   public ResponseEntity approve(@PathVariable Long id) {
     accountService.approve(id);
 
@@ -86,6 +94,7 @@ public class AccountController {
   }
 
   @PutMapping("{id}/reject")
+  @PreAuthorize("hasAnyAuthority('DECLINE_ACCOUNT', 'ALL_RIGHTS')")
   public ResponseEntity reject(@PathVariable Long id) {
     accountService.reject(id);
 

@@ -9,6 +9,7 @@ import ma.tiwtiw.bank.pojo.RightEnum;
 import ma.tiwtiw.bank.service.RightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,6 +29,7 @@ public class RightController {
   }
 
   @GetMapping
+  @PreAuthorize("hasAuthority('SHOW_RIGHTS')")
   public ResponseEntity<List<Right>> findAll() {
     List<Right> result = rightService.findAll();
 
@@ -35,6 +37,7 @@ public class RightController {
   }
 
   @GetMapping("own")
+  @PreAuthorize("isAuthenticated()")
   public ResponseEntity<List<Right>> findAll(Principal principal) {
     List<Right> result = rightService.findAll(principal.getName());
 
@@ -42,6 +45,7 @@ public class RightController {
   }
 
   @PutMapping("{rightEnum}")
+  @PreAuthorize("hasAnyAuthority('UPDATE_RIGHT', 'ALL_RIGHTS')")
   public ResponseEntity update(
       @PathVariable RightEnum rightEnum,
       @RequestBody @Valid UpdateRight updateRight
@@ -52,6 +56,7 @@ public class RightController {
   }
 
   @PutMapping("{rightEnum}/activate")
+  @PreAuthorize("hasAnyAuthority('ACIVATE_RIGHT', 'ALL_RIGHTS')")
   public ResponseEntity activate(@PathVariable RightEnum rightEnum) {
     rightService.activate(rightEnum);
 
@@ -59,6 +64,7 @@ public class RightController {
   }
 
   @PutMapping("{rightEnum}/deactivate")
+  @PreAuthorize("hasAnyAuthority('DEACTIVATE_RIGHT', 'ALL_RIGHTS')")
   public ResponseEntity deactivate(@PathVariable RightEnum rightEnum) {
     rightService.deactivate(rightEnum);
 
