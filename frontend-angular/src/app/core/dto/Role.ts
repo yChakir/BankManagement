@@ -11,7 +11,7 @@ export class AddRole {
   rights: string[];
 }
 
-export class EditRole {
+export class UpdateRole {
   name: string;
   rights: string[];
 }

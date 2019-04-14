@@ -1,3 +1,140 @@
-<p>
-  account-type-page works!
-</p>
+<nz-card>
+  <nz-table #nzTable nzBordered nzShowQuickJumper nzShowSizeChanger nzSize="middle" [nzData]="show"
+            [nzLoading]="loading"
+            [nzTitle]="searchTemplate">
+    <thead (nzSortChange)="setSort($event)" nzSingleSort>
+    <tr>
+      <th nzShowSort nzSortKey="name">Name</th>
+      <th>Created At</th>
+      <th>Last Modified</th>
+      <th nzWidth="100px" nzRight="0px">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>
+        <nz-form-item>
+          <nz-form-control nzHasFeedback>
+            <input nz-input [formControl]="addForm.controls['name']" placeholder="Nom" name="nom"
+                   maxlength="30">
+            <nz-form-explain *ngIf="addForm.controls['name'].dirty && addForm.controls['name'].errors">
+              <ng-container *ngIf="addForm.controls['name'].hasError('required')">
+                This field is required
+              </ng-container>
+              <ng-container *ngIf="addForm.controls['name'].hasError('minlength')">
+                This field must contains at least
+                {{addForm.controls['name'].errors['minlength'].requiredLength}} characters
+              </ng-container>
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </td>
+      <td></td>
+      <td></td>
+      <td nzRight="0px">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-button-group>
+                <span nz-tooltip [nzTitle]="'Add'"><button nz-button nzType="primary" (click)="add()"
+                                                           [nzLoading]="adding"
+                                                           [disabled]="!addForm.dirty || !addForm.valid"><i
+                  class="anticon anticon-plus"></i></button></span>
+              <span nz-tooltip nzTitle="Reset"><button nz-button nzType="default" (click)="reset()"><i
+                class="anticon anticon-retweet"></i></button></span>
+            </nz-button-group>
+          </nz-form-control>
+        </nz-form-item>
+      </td>
+    </tr>
+    <tr *ngFor="let i of nzTable.data">
+      <td>
+        <ng-container *ngIf="editIndex !== i.id">
+          {{i.name}}
+        </ng-container>
+        <ng-container *ngIf="editIndex === i.id">
+          <nz-form-item>
+            <nz-form-control nzHasFeedback>
+              <input nz-input [formControl]="editForm.controls['name']" placeholder="Nom" name="nom"
+                     maxlength="30">
+              <nz-form-explain *ngIf="editForm.controls['name'].dirty && editForm.controls['name'].errors">
+                <ng-container *ngIf="editForm.controls['name'].hasError('required')">
+                  This field is required
+                </ng-container>
+                <ng-container *ngIf="editForm.controls['name'].hasError('minlength')">
+                  This field must contains at least
+                  {{editForm.controls['name'].errors['minlength'].requiredLength}} characters
+                </ng-container>
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="editIndex !== i.id">
+          {{i.created}}
+        </ng-container>
+        <ng-container *ngIf="editIndex === i.id">
+          <nz-form-item>
+            <nz-form-control nzHasFeedback>
+              {{i.created}}
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="editIndex !== i.id">
+          {{i.updated}}
+        </ng-container>
+        <ng-container *ngIf="editIndex === i.id">
+          <nz-form-item>
+            <nz-form-control nzHasFeedback>
+              {{i.updated}}
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+      </td>
+      <td nzRight="0px">
+        <ng-container>
+          <nz-button-group *ngIf="editIndex !== i.id">
+              <span nz-tooltip [nzTitle]="'Edit'"><button
+                (click)="edit(i)"
+                nz-button><i class="anticon anticon-edit"></i></button></span>
+            <span nz-tooltip [nzTitle]="'Delete'"><button
+              nz-popconfirm
+              nzTitle="Are you sure to delete this role ?" (nzOnConfirm)="delete(i)"
+              [nzLoading]="deleting[i.id]"
+              nz-button nzType="danger"><i class="anticon anticon-delete"></i></button></span>
+          </nz-button-group>
+          <nz-form-item *ngIf="editIndex === i.id">
+            <nz-form-control>
+              <nz-button-group>
+                  <span nz-tooltip nzTitle="Validate">
+                    <button nz-popconfirm nzTitle="Are you sure to edit this role ?"
+                            (nzOnConfirm)="validate(i)" [nzLoading]="validating[i.id]" nz-button
+                            [disabled]="!editForm.dirty || !editForm.valid">
+                    <i class="anticon anticon-check"></i>
+                    </button>
+                  </span>
+                <span nz-tooltip nzTitle="Cancel"><button nz-button (click)="cancel()"
+                                                          [disabled]="validating[i.id]"><i
+                  class="anticon anticon-close"></i></button></span>
+              </nz-button-group>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #searchTemplate>
+  <div nz-row>
+    <div nz-col [nzSpan]="8">Roles</div>
+    <div nz-col [nzSpan]="8"></div>
+    <div nz-col [nzSpan]="8">
+      <input nz-input [(ngModel)]="searchString" id="search" name="search" placeholder="Search"
+             (input)="filter()">
+    </div>
+  </div>
+</ng-template>
