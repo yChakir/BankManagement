@@ -1,6 +1,8 @@
 package ma.tiwtiw.bank.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import ma.tiwtiw.bank.entity.Right;
 import ma.tiwtiw.bank.entity.User;
@@ -23,15 +25,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RightServiceImpl implements RightService {
 
-  private final RightRepository rightRepository;
+  private RightRepository rightRepository;
 
   private UserService userService;
 
-  private final ConversionService conversionService;
+  private ConversionService conversionService;
 
-  public RightServiceImpl(RightRepository rightRepository,
-      ConversionService conversionService) {
+  @Autowired
+  public void setRightRepository(RightRepository rightRepository) {
     this.rightRepository = rightRepository;
+  }
+
+  @Autowired
+  public void setConversionService(ConversionService conversionService) {
     this.conversionService = conversionService;
   }
 
@@ -54,11 +60,16 @@ public class RightServiceImpl implements RightService {
 
     User user = userService.findByEmail(username);
 
-    return (List<Right>) conversionService.convert(
-        user.getAuthorities(),
-        TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(GrantedAuthority.class)),
-        TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(Right.class))
-    );
+    return user.getAuthorities().stream()
+        .map(this::stringToRightEnum)
+        .map(this::findByRightEnum)
+        .collect(Collectors.toList());
+  }
+
+  private RightEnum stringToRightEnum(GrantedAuthority grantedAuthority) {
+    return Arrays.stream(RightEnum.values())
+        .filter(rightEnum -> rightEnum.name().equals(grantedAuthority.getAuthority()))
+        .findAny().orElse(null);
   }
 
   @Override

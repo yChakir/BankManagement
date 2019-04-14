@@ -3,6 +3,7 @@ import {Observable, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {JwtService} from "./jwt.service";
+import {SecurityService} from "./security.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private securityService: SecurityService
   ) {
     const token = localStorage.getItem("token");
 
@@ -39,10 +41,13 @@ export class UserService {
     })
   }
 
-  public logout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("expires_at");
-    this.isAuthenticated.next(this.currentAuthenticationState = false);
+  public logout(): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("expires_at");
+      this.isAuthenticated.next(this.currentAuthenticationState = false);
+      resolve();
+    })
   }
 
   public startSession(token: string, store?: boolean) {
@@ -54,6 +59,7 @@ export class UserService {
     }
 
     this.isAuthenticated.next(this.currentAuthenticationState = true);
+    this.securityService.fetch();
   }
 
   public register(registration: Registration): Observable<any> {

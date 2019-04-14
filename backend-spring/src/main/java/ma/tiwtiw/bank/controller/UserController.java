@@ -6,6 +6,7 @@ import ma.tiwtiw.bank.dto.Registration;
 import ma.tiwtiw.bank.dto.ResetPassword;
 import ma.tiwtiw.bank.dto.ValidateEmail;
 import ma.tiwtiw.bank.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,9 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/users")
 public class UserController {
 
-  private final UserService userService;
+  private UserService userService;
 
-  public UserController(UserService userService) {
+  @Autowired
+  public void setUserService(UserService userService) {
     this.userService = userService;
   }
 

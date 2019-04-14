@@ -99,13 +99,13 @@
       <td nzRight="0px">
         <ng-container *ngIf="i.name !== 'ALL_RIGHTS'">
           <nz-button-group *ngIf="editIndex !== i.id">
-              <span nz-tooltip [nzTitle]="'Edit'"><button
+              <span *ngIf="canUpdate || allRights" nz-tooltip [nzTitle]="'Edit'"><button
                 (click)="edit(i)" nz-button><i class="anticon anticon-edit"></i></button></span>
-            <span *ngIf="i.active" nz-tooltip
+            <span *ngIf="i.active && (canDeactivate || allRights)" nz-tooltip
                   [nzTitle]="'Deactivate'"><button
               nz-popconfirm nzTitle="Are you sure to deactivate this right ?" (nzOnConfirm)="deactivate(i)"
               [nzLoading]="activating[i.id]" nz-button><i class="anticon anticon-close"></i></button></span>
-            <span *ngIf="!i.active" nz-tooltip
+            <span *ngIf="!i.active && (canActivate || allRights)" nz-tooltip
                   [nzTitle]="'Activate'"><button
               nz-popconfirm nzTitle="Are you sure to activate this right ?" (nzOnConfirm)="activate(i)"
               [nzLoading]="activating[i.id]"

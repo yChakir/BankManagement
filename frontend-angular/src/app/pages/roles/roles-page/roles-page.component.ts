@@ -5,6 +5,7 @@ import {NzMessageService} from "ng-zorro-antd";
 import {RightsService} from "../../../core/rights.service";
 import {RolesService} from "../../../core/roles.service";
 import {includesIgnoreCase} from "../../../core/utils";
+import {SecurityService} from "../../../core/security.service";
 
 @Component({
   selector: 'app-roles-page',
@@ -13,18 +14,32 @@ import {includesIgnoreCase} from "../../../core/utils";
 })
 export class RolesPageComponent implements OnInit {
   elements: Role[] = [];
+
   show: Role[] = [];
+
   rights: Right[] = [];
 
-  sortValue = { key: null, value: null };
+  sortValue = {key: null, value: null};
+
   loading = false;
+
   adding = false;
+
   deleting = [];
 
   editIndex = -1;
 
   validating = [];
+
   searchString = '';
+
+  allRights: boolean = this.securityService.hasAllRights;
+
+  canAdd: boolean = this.securityService.hasAddRole;
+
+  canUpdate: boolean = this.securityService.hasUpdateRole;
+
+  canDelete: boolean = this.securityService.hasDeleteRole;
 
   addForm: FormGroup = this.builder.group({
     name: this.builder.control('', [Validators.required, Validators.minLength(2)]),
@@ -40,11 +55,17 @@ export class RolesPageComponent implements OnInit {
     private rolesService: RolesService,
     private rightsService: RightsService,
     private message: NzMessageService,
-    private builder: FormBuilder
-  ) { }
+    private builder: FormBuilder,
+    private securityService: SecurityService
+  ) {
+  }
 
   ngOnInit() {
     this.load();
+    this.securityService.hasAllRights$.subscribe(value => this.allRights = value);
+    this.securityService.hasAddRole$.subscribe(value => this.canAdd = value);
+    this.securityService.hasUpdateRole$.subscribe(value => this.canUpdate = value);
+    this.securityService.hasDeleteRole$.subscribe(value => this.canDelete = value);
   }
 
   load() {
@@ -81,6 +102,9 @@ export class RolesPageComponent implements OnInit {
       this.load();
       this.reset();
       this.adding = false;
+    }, response => {
+      this.message.error(response.error.message);
+      this.adding = false;
     });
   }
 
@@ -97,7 +121,11 @@ export class RolesPageComponent implements OnInit {
 
   validate(element: Role) {
     this.validating[element.id] = true;
-    const role: Role = { ...element, name: this.editForm.controls['name'].value, rights: this.editForm.controls['rights'].value };
+    const role: Role = {
+      ...element,
+      name: this.editForm.controls['name'].value,
+      rights: this.editForm.controls['rights'].value
+    };
     this.rolesService.update(element.id, this.editForm.value).subscribe(
       () => {
         this.message.success(`The role '${element.name}' has been updated.`);

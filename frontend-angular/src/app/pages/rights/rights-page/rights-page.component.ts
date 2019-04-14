@@ -3,6 +3,7 @@ import {RightsService} from "../../../core/rights.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NzMessageService} from "ng-zorro-antd";
 import {includesIgnoreCase} from "../../../core/utils";
+import {SecurityService} from "../../../core/security.service";
 
 @Component({
   selector: 'app-rights-page',
@@ -11,6 +12,7 @@ import {includesIgnoreCase} from "../../../core/utils";
 })
 export class RightsPageComponent implements OnInit {
   elements: Right[] = [];
+
   show: Right[] = [];
 
   sortValue = {key: null, value: null};
@@ -20,8 +22,18 @@ export class RightsPageComponent implements OnInit {
   editIndex = -1;
 
   activating = [];
+
   validating = [];
+
   searchString = '';
+
+  allRights: boolean = this.securityService.hasAllRights;
+
+  canUpdate: boolean = this.securityService.hasUpdateRight;
+
+  canActivate: boolean = this.securityService.hasActivateRight;
+
+  canDeactivate: boolean = this.securityService.hasDeactivateRight;
 
   form: FormGroup = this.builder.group({
     description: this.builder.control('', [Validators.required, Validators.minLength(2)])
@@ -30,12 +42,17 @@ export class RightsPageComponent implements OnInit {
   constructor(
     private messageService: NzMessageService,
     private service: RightsService,
-    private builder: FormBuilder
+    private builder: FormBuilder,
+    private securityService: SecurityService
   ) {
   }
 
   ngOnInit() {
     this.fetch();
+    this.securityService.hasAllRights$.subscribe(value => this.allRights = value);
+    this.securityService.hasUpdateRight$.subscribe(value => this.canUpdate = value);
+    this.securityService.hasActivateRight$.subscribe(value => this.canActivate = value);
+    this.securityService.hasDeactivateRight$.subscribe(value => this.canDeactivate = value);
   }
 
   fetch() {

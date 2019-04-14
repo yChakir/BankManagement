@@ -9,6 +9,7 @@ import ma.tiwtiw.bank.entity.User;
 import ma.tiwtiw.bank.pojo.TokenType;
 import ma.tiwtiw.bank.repository.TokenRepository;
 import ma.tiwtiw.bank.service.TokenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TokenServiceImpl implements TokenService {
 
-  private final TokenRepository repository;
+  private TokenRepository repository;
 
-  public TokenServiceImpl(TokenRepository repository) {
+  @Autowired
+  public void setRepository(TokenRepository repository) {
     this.repository = repository;
   }
 

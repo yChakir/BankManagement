@@ -4,6 +4,7 @@ import {NzMessageService} from "ng-zorro-antd";
 import {includesIgnoreCase} from "../../../core/utils";
 import {AccountType} from "../../../core/dto/AccountType";
 import {AccountTypeService} from "../../../core/account-type.service";
+import {SecurityService} from "../../../core/security.service";
 
 @Component({
   selector: 'app-account-type-page',
@@ -29,6 +30,14 @@ export class AccountTypePageComponent implements OnInit {
 
   searchString = '';
 
+  allRights: boolean = this.securityService.hasAllRights;
+
+  canAdd: boolean = this.securityService.hasAddAccountType;
+
+  canUpdate: boolean = this.securityService.hasUpdateAccountType;
+
+  canDelete: boolean = this.securityService.hasDeleteAccountType;
+
   addForm: FormGroup = this.builder.group({
     name: this.builder.control('', [Validators.required, Validators.minLength(2)])
   });
@@ -40,12 +49,17 @@ export class AccountTypePageComponent implements OnInit {
   constructor(
     private accountTypeService: AccountTypeService,
     private message: NzMessageService,
-    private builder: FormBuilder
+    private builder: FormBuilder,
+    private securityService: SecurityService
   ) {
   }
 
   ngOnInit() {
     this.load();
+    this.securityService.hasAllRights$.subscribe(value => this.allRights = value);
+    this.securityService.hasAddAccountType$.subscribe(value => this.canAdd = value);
+    this.securityService.hasUpdateAccountType$.subscribe(value => this.canUpdate = value);
+    this.securityService.hasDeleteAccountType$.subscribe(value => this.canDelete = value);
   }
 
   load() {
@@ -71,6 +85,9 @@ export class AccountTypePageComponent implements OnInit {
       this.message.success(`The Account type '${this.addForm.controls.name.value}' has been added.`);
       this.load();
       this.reset();
+      this.adding = false;
+    }, response => {
+      this.message.error(response.error.message);
       this.adding = false;
     });
   }

@@ -11,7 +11,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
+    <tr *ngIf="canAdd || allRights">
       <td>
         <nz-form-item>
           <nz-form-control nzHasFeedback>
@@ -96,10 +96,10 @@
       <td nzRight="0px">
         <ng-container>
           <nz-button-group *ngIf="editIndex !== i.id">
-              <span nz-tooltip [nzTitle]="'Edit'"><button
-                (click)="edit(i)"
-                nz-button><i class="anticon anticon-edit"></i></button></span>
-            <span nz-tooltip [nzTitle]="'Delete'"><button
+            <span *ngIf="canUpdate || allRights" nz-tooltip [nzTitle]="'Edit'"><button
+              (click)="edit(i)"
+              nz-button><i class="anticon anticon-edit"></i></button></span>
+            <span *ngIf="canDelete || allRights" nz-tooltip [nzTitle]="'Delete'"><button
               nz-popconfirm
               nzTitle="Are you sure to delete this account type ?" (nzOnConfirm)="delete(i)"
               [nzLoading]="deleting[i.id]"

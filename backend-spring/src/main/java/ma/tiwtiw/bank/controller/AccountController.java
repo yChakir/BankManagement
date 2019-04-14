@@ -8,6 +8,7 @@ import ma.tiwtiw.bank.dto.UpdateAccount;
 import ma.tiwtiw.bank.entity.Account;
 import ma.tiwtiw.bank.pojo.AccountStatus;
 import ma.tiwtiw.bank.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/accounts")
 public class AccountController {
 
-  private final AccountService accountService;
+  private AccountService accountService;
 
-  public AccountController(AccountService accountService) {
+  @Autowired
+  public void setAccountService(AccountService accountService) {
     this.accountService = accountService;
   }
 

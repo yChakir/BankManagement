@@ -8,6 +8,7 @@ import {AccountTypeService} from "../../../core/account-type.service";
 import {AccountsService} from "../../../core/accounts.service";
 import {Account} from "../../../core/dto/Account";
 import {Observable} from "rxjs";
+import {SecurityService} from "../../../core/security.service";
 
 @Component({
   selector: 'app-account-list',
@@ -40,6 +41,25 @@ export class AccountListComponent implements OnInit {
 
   idx: number = 0;
 
+  allRights: boolean = this.securityService.hasAllRights;
+
+  canShow: boolean = this.securityService.hasShowAccounts;
+
+  canShowOwn: boolean = this.securityService.hasShowAccountsOwn;
+
+  canShowWaitingForApproval: boolean = this.securityService.hasShowAccountsWaitingApproval;
+
+  canAdd: boolean = this.securityService.hasAddAccount;
+
+  canUpdate: boolean = this.securityService.hasAddAccount;
+
+  canApprove: boolean = this.securityService.hasApproveAccount;
+
+  canDecline : boolean = this.securityService.hasDeclineAccount;
+
+  canDelete: boolean = this.securityService.hasAddAccount;
+
+
   addForm: FormGroup = this.builder.group({
     name: this.builder.control('', [Validators.required, Validators.minLength(2)]),
     type: this.builder.control(null, Validators.required)
@@ -54,12 +74,22 @@ export class AccountListComponent implements OnInit {
     private accountService: AccountsService,
     private accountTypeService: AccountTypeService,
     private message: NzMessageService,
-    private builder: FormBuilder
+    private builder: FormBuilder,
+    private securityService: SecurityService
   ) {
   }
 
   ngOnInit() {
     this.load();
+    this.securityService.hasAllRights$.subscribe(value => this.allRights = value);
+    this.securityService.hasShowAccounts$.subscribe(value => this.canShow = value);
+    this.securityService.hasShowAccountsOwn$.subscribe(value => this.canShowOwn = value);
+    this.securityService.hasShowAccountsWaitingApproval$.subscribe(value => this.canShowWaitingForApproval = value);
+    this.securityService.hasAddAccount$.subscribe(value => this.canAdd = value);
+    this.securityService.hasUpdateAccount$.subscribe(value => this.canUpdate = value);
+    this.securityService.hasApproveAccount$.subscribe(value => this.canApprove = value);
+    this.securityService.hasDeclineAccount$.subscribe(value => this.canDecline= value);
+    this.securityService.hasDeleteAccount$.subscribe(value => this.canDelete = value);
   }
 
   load() {
@@ -111,6 +141,9 @@ export class AccountListComponent implements OnInit {
       this.message.success(`The account '${this.addForm.controls.name.value}' has been added.`);
       this.load();
       this.reset();
+      this.adding = false;
+    }, response => {
+      this.message.error(response.error.message);
       this.adding = false;
     });
   }

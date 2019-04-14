@@ -6,6 +6,7 @@ import ma.tiwtiw.bank.dto.AddAccountType;
 import ma.tiwtiw.bank.dto.UpdateAccountType;
 import ma.tiwtiw.bank.entity.AccountType;
 import ma.tiwtiw.bank.service.AccountTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/account-type")
 public class AccountTypeController {
 
-  private final AccountTypeService accountTypeService;
+  private AccountTypeService accountTypeService;
 
-  public AccountTypeController(AccountTypeService accountTypeService) {
+  @Autowired
+  public void setAccountTypeService(AccountTypeService accountTypeService) {
     this.accountTypeService = accountTypeService;
   }
 

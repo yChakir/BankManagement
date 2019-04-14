@@ -13,13 +13,19 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
   private HandlerInterceptor jwtAuthorizationFilter;
 
-  private final Converter registrationToUserConverter;
+  private Converter registrationToUserConverter;
 
-  private final Converter accountToAccountResultConverter;
+  private Converter accountToAccountResultConverter;
 
-  public WebMvcConfiguration(Converter registrationToUserConverter,
-      Converter accountToAccountResultConverter) {
+  @Autowired
+  public void setRegistrationToUserConverter(
+      Converter registrationToUserConverter) {
     this.registrationToUserConverter = registrationToUserConverter;
+  }
+
+  @Autowired
+  public void setAccountToAccountResultConverter(
+      Converter accountToAccountResultConverter) {
     this.accountToAccountResultConverter = accountToAccountResultConverter;
   }
 

@@ -9,6 +9,7 @@ import ma.tiwtiw.bank.repository.AccountTypeRepository;
 import ma.tiwtiw.bank.service.AccountService;
 import ma.tiwtiw.bank.service.AccountTypeService;
 import ma.tiwtiw.bank.util.Translator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AccountTypeServiceImpl implements AccountTypeService {
 
-  private final AccountTypeRepository accountTypeRepository;
+  private AccountTypeRepository accountTypeRepository;
 
-  public AccountTypeServiceImpl(AccountTypeRepository accountTypeRepository) {
+  @Autowired
+  public void setAccountTypeRepository(AccountTypeRepository accountTypeRepository) {
     this.accountTypeRepository = accountTypeRepository;
   }
 

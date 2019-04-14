@@ -1,23 +1,23 @@
 <div class="logo"></div>
 <ul nz-menu [nzTheme]="'light'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
-  <li nz-menu-item [nzSelected]="selected === routes.profile">
+  <li *ngIf="canShowProfile || hasAllRights" nz-menu-item [nzSelected]="selected === routes.profile">
     <a [routerLink]="routes.profile"><i nz-icon type="profile"></i><span class="nav-text">profile</span></a>
   </li>
-  <li nz-menu-item [nzSelected]="selected === routes.accountType">
+  <li *ngIf="canShowAccountType || hasAllRights" nz-menu-item [nzSelected]="selected === routes.accountType">
     <a [routerLink]="routes.accountType"><i nz-icon type="contacts"></i><span
       class="nav-text">account types</span></a>
   </li>
-  <li nz-menu-item [nzSelected]="selected === routes.accounts">
+  <li *ngIf="canShowAccount || hasAllRights" nz-menu-item [nzSelected]="selected === routes.accounts">
     <a [routerLink]="routes.accounts"><i nz-icon type="contacts"></i><span
       class="nav-text">accounts</span></a>
   </li>
-  <li nz-menu-item [nzSelected]="selected === routes.roles">
+  <li *ngIf="canShowRole || hasAllRights" nz-menu-item [nzSelected]="selected === routes.roles">
     <a [routerLink]="routes.roles"><i nz-icon type="user"></i><span class="nav-text">roles</span></a>
   </li>
-  <li nz-menu-item [nzSelected]="selected === routes.types">
+  <li *ngIf="canShowRight || hasAllRights" nz-menu-item [nzSelected]="selected === routes.rights">
     <a [routerLink]="routes.rights"><i nz-icon type="lock"></i><span class="nav-text">rights</span></a>
   </li>
-  <li nz-menu-item [nzSelected]="selected === routes.history">
+  <li *ngIf="canShowHistory || hasAllRights" nz-menu-item [nzSelected]="selected === routes.history">
     <a [routerLink]="routes.history"><i nz-icon type="hourglass"></i><span
       class="nav-text">history</span></a>
   </li>

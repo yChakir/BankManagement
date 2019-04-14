@@ -7,6 +7,7 @@ import ma.tiwtiw.bank.dto.UpdateRight;
 import ma.tiwtiw.bank.entity.Right;
 import ma.tiwtiw.bank.pojo.RightEnum;
 import ma.tiwtiw.bank.service.RightService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/rights")
 public class RightController {
 
-  private final RightService rightService;
+  private RightService rightService;
 
-  public RightController(RightService rightService) {
+  @Autowired
+  public void setRightService(RightService rightService) {
     this.rightService = rightService;
   }
 

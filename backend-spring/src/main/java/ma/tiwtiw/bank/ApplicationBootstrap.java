@@ -6,6 +6,7 @@ import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import ma.tiwtiw.bank.configuration.AppConstants;
 import ma.tiwtiw.bank.dto.Registration;
+import ma.tiwtiw.bank.entity.Right;
 import ma.tiwtiw.bank.entity.Role;
 import ma.tiwtiw.bank.entity.User;
 import ma.tiwtiw.bank.exception.ResourceNotFoundException;
@@ -61,8 +62,7 @@ public class ApplicationBootstrap implements ApplicationListener<ApplicationRead
 
     if (!optionalAdmin.isPresent()) {
       log.debug("assertAdminRole() :: admin role not found, create it");
-      Role role = roleService.add(AppConstants.ADMIN_ROLE_NAME, new ArrayList<>());
-      roleService.update(role.getId(), role.getName(), new ArrayList<RightEnum>() {{
+      Role role = roleService.add(AppConstants.ADMIN_ROLE_NAME, new ArrayList<RightEnum>(){{
         add(RightEnum.ALL_RIGHTS);
       }});
     }

@@ -38,29 +38,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
-  private final UserRepository repository;
+  private UserRepository repository;
 
-  private final TokenService tokenService;
+  private TokenService tokenService;
 
-  private final PasswordEncoder encoder;
+  private PasswordEncoder encoder;
 
-  private final ApplicationEventPublisher publisher;
+  private ApplicationEventPublisher publisher;
 
   private ConversionService conversionService;
 
-  private RoleService roleService;
-
-  public UserServiceImpl(
-      UserRepository repository,
-      TokenService tokenService,
-      PasswordEncoder encoder,
-      ApplicationEventPublisher publisher
-  ) {
-    this.repository = repository;
-    this.tokenService = tokenService;
-    this.encoder = encoder;
-    this.publisher = publisher;
-  }
+  private RoleServiceImpl roleService;
 
   @Autowired
   public void setConversionService(ConversionService conversionService) {
@@ -68,8 +56,28 @@ public class UserServiceImpl implements UserService {
   }
 
   @Autowired
-  public void setRoleService(RoleService roleService) {
+  public void setRoleService(RoleServiceImpl roleService) {
     this.roleService = roleService;
+  }
+
+  @Autowired
+  public void setRepository(UserRepository repository) {
+    this.repository = repository;
+  }
+
+  @Autowired
+  public void setTokenService(TokenService tokenService) {
+    this.tokenService = tokenService;
+  }
+
+  @Autowired
+  public void setEncoder(PasswordEncoder encoder) {
+    this.encoder = encoder;
+  }
+
+  @Autowired
+  public void setPublisher(ApplicationEventPublisher publisher) {
+    this.publisher = publisher;
   }
 
   @Override

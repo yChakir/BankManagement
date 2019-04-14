@@ -15,6 +15,7 @@ import ma.tiwtiw.bank.pojo.MailType;
 import ma.tiwtiw.bank.repository.EmailRepository;
 import ma.tiwtiw.bank.service.EmailService;
 import ma.tiwtiw.bank.util.Translator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -26,14 +27,22 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 @Service
 public class EmailServiceImpl implements EmailService {
 
-  private final JavaMailSender sender;
-  private final EmailRepository emailRepository;
-  private final Configuration freeMarkerConfiguration;
+  private JavaMailSender sender;
+  private EmailRepository emailRepository;
+  private Configuration freeMarkerConfiguration;
 
-  public EmailServiceImpl(JavaMailSender sender, EmailRepository emailRepository,
-      Configuration freeMarkerConfiguration) {
+  @Autowired
+  public void setSender(JavaMailSender sender) {
     this.sender = sender;
+  }
+
+  @Autowired
+  public void setEmailRepository(EmailRepository emailRepository) {
     this.emailRepository = emailRepository;
+  }
+
+  @Autowired
+  public void setFreeMarkerConfiguration(Configuration freeMarkerConfiguration) {
     this.freeMarkerConfiguration = freeMarkerConfiguration;
   }
 

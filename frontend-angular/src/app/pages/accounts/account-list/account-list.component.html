@@ -1,9 +1,9 @@
 <nz-card>
   <nz-card-tab>
     <nz-tabset [(nzSelectedIndex)]="idx" (nzSelectChange)="fetchAccounts()">
-      <nz-tab nzTitle="My Accounts"></nz-tab>
-      <nz-tab nzTitle="All"></nz-tab>
-      <nz-tab nzTitle="Waiting For Approval"></nz-tab>
+      <nz-tab *ngIf="canShowOwn || allRights" nzTitle="My Accounts"></nz-tab>
+      <nz-tab *ngIf="canShow || allRights" nzTitle="All"></nz-tab>
+      <nz-tab *ngIf="canShowWaitingForApproval || allRights" nzTitle="Waiting For Approval"></nz-tab>
     </nz-tabset>
   </nz-card-tab>
   <nz-table #nzTable nzBordered nzShowQuickJumper nzShowSizeChanger nzSize="middle" [nzData]="show"
@@ -21,7 +21,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
+    <tr *ngIf="canAdd || allRights">
       <td>
         <nz-form-item>
           <nz-form-control nzHasFeedback>
@@ -170,24 +170,24 @@
       <td nzRight="0px">
         <ng-container>
           <nz-button-group *ngIf="editIndex !== i.id">
-            <span nz-tooltip [nzTitle]="'Edit'">
+            <span *ngIf="canUpdate || allRights" nz-tooltip [nzTitle]="'Edit'">
               <button (click)="edit(i)" nz-button>
                 <i class="anticon anticon-edit"></i>
               </button>
             </span>
-            <span *ngIf="i.status === 'WAITING_FOR_APPROVAL'" nz-tooltip [nzTitle]="'Approve'">
+            <span *ngIf="i.status === 'WAITING_FOR_APPROVAL' && (canApprove || allRights)" nz-tooltip [nzTitle]="'Approve'">
               <button nz-popconfirm nzTitle="Are you sure to approve this account ?" (nzOnConfirm)="approve(i)"
                       [nzLoading]="approving[i.id]" nz-button>
                 <i class="anticon anticon-check"></i>
               </button>
             </span>
-            <span *ngIf="i.status === 'WAITING_FOR_APPROVAL'" nz-tooltip [nzTitle]="'Reject'">
+            <span *ngIf="i.status === 'WAITING_FOR_APPROVAL' && (canDecline || allRights)" nz-tooltip [nzTitle]="'Reject'">
               <button nz-popconfirm nzTitle="Are you sure to reject this account ?" (nzOnConfirm)="reject(i)"
                       [nzLoading]="approving[i.id]" nz-button>
                 <i class="anticon anticon-close"></i>
               </button>
             </span>
-            <span nz-tooltip [nzTitle]="'Delete'">
+            <span *ngIf="canDelete || allRights" nz-tooltip [nzTitle]="'Delete'">
               <button nz-popconfirm nzTitle="Are you sure to delete this account ?" (nzOnConfirm)="delete(i)"
                       [nzLoading]="deleting[i.id]" nz-button nzType="danger">
                 <i class="anticon anticon-delete"></i>

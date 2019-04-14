@@ -14,6 +14,7 @@ import ma.tiwtiw.bank.repository.RoleRepository;
 import ma.tiwtiw.bank.service.RightService;
 import ma.tiwtiw.bank.service.RoleService;
 import ma.tiwtiw.bank.util.Translator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,13 +23,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RoleServiceImpl implements RoleService {
 
-  private final RoleRepository roleRepository;
+  private RoleRepository roleRepository;
 
-  private final RightService rightService;
+  private RightService rightService;
 
-  public RoleServiceImpl(RoleRepository roleRepository,
-      RightService rightService) {
+  @Autowired
+  public void setRoleRepository(RoleRepository roleRepository) {
     this.roleRepository = roleRepository;
+  }
+
+  @Autowired
+  public void setRightService(RightService rightService) {
     this.rightService = rightService;
   }
 

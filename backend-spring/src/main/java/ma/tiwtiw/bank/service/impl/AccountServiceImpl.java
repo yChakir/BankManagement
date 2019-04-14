@@ -13,6 +13,7 @@ import ma.tiwtiw.bank.service.AccountService;
 import ma.tiwtiw.bank.service.AccountTypeService;
 import ma.tiwtiw.bank.service.UserService;
 import ma.tiwtiw.bank.util.Translator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,16 +22,24 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AccountServiceImpl implements AccountService {
 
-  private final AccountRepository accountRepository;
+  private AccountRepository accountRepository;
 
-  private final AccountTypeService accountTypeService;
+  private AccountTypeService accountTypeService;
 
-  private final UserService userService;
+  private UserService userService;
 
-  public AccountServiceImpl(AccountRepository accountRepository,
-      AccountTypeService accountTypeService, UserService userService) {
+  @Autowired
+  public void setAccountRepository(AccountRepository accountRepository) {
     this.accountRepository = accountRepository;
+  }
+
+  @Autowired
+  public void setAccountTypeService(AccountTypeService accountTypeService) {
     this.accountTypeService = accountTypeService;
+  }
+
+  @Autowired
+  public void setUserService(UserService userService) {
     this.userService = userService;
   }
 

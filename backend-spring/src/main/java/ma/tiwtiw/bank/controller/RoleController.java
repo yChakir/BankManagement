@@ -7,6 +7,7 @@ import ma.tiwtiw.bank.dto.AddRole;
 import ma.tiwtiw.bank.dto.EditRole;
 import ma.tiwtiw.bank.entity.Role;
 import ma.tiwtiw.bank.service.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,9 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/roles")
 public class RoleController {
 
-  private final RoleService roleService;
+  private RoleService roleService;
 
-  public RoleController(RoleService roleService) {
+  @Autowired
+  public void setRoleService(RoleService roleService) {
     this.roleService = roleService;
   }
 

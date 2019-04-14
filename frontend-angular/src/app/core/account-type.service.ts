@@ -22,11 +22,11 @@ export class AccountTypeService {
     return this.http.post(`${environment.api.url}/api/v1/account-type`, dto);
   }
 
-  public update(id: number, dto: UpdateAccountType): Observable<any> {
+  public update(id: number, dto: UpdateAccountType) {
     return this.http.put(`${environment.api.url}/api/v1/account-type/${id}`, dto);
   }
 
-  public delete(id: number): Observable<any> {
+  public delete(id: number) {
     return this.http.delete(`${environment.api.url}/api/v1/account-type/${id}`);
   }
 
