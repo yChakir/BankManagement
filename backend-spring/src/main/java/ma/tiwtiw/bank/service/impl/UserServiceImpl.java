@@ -3,6 +3,7 @@ package ma.tiwtiw.bank.service.impl;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import javax.jws.soap.SOAPBinding.Use;
 import lombok.extern.slf4j.Slf4j;
 import ma.tiwtiw.bank.dto.ChangePassword;
 import ma.tiwtiw.bank.dto.Registration;
@@ -18,6 +19,8 @@ import ma.tiwtiw.bank.repository.UserRepository;
 import ma.tiwtiw.bank.service.TokenService;
 import ma.tiwtiw.bank.service.UserService;
 import ma.tiwtiw.bank.util.Translator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.convert.ConversionService;
@@ -40,19 +43,22 @@ public class UserServiceImpl implements UserService {
 
   private final ApplicationEventPublisher publisher;
 
-  private final ConversionService conversionService;
+  private ConversionService conversionService;
 
   public UserServiceImpl(
       UserRepository repository,
       TokenService tokenService,
       PasswordEncoder encoder,
-      ApplicationEventPublisher publisher,
-      ConversionService conversionService
+      ApplicationEventPublisher publisher
   ) {
     this.repository = repository;
     this.tokenService = tokenService;
     this.encoder = encoder;
     this.publisher = publisher;
+  }
+
+  @Autowired
+  public void setConversionService(ConversionService conversionService) {
     this.conversionService = conversionService;
   }
 
@@ -91,7 +97,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void delete(String email) {
+  public User delete(String email) {
     log.debug("delete() :: username = {}", email);
     User user = repository.findByEmail(email).orElseThrow(
         () -> new UsernameNotFoundException(Translator.translate("exception.user.not-found")));
@@ -105,7 +111,7 @@ public class UserServiceImpl implements UserService {
 
     user.setDeleted(true);
 
-    repository.save(user);
+    return repository.save(user);
   }
 
   @Override
@@ -136,7 +142,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void emailValidation(ValidateEmail emailValidation) {
+  public User emailValidation(ValidateEmail emailValidation) {
     log.debug("emailValidation() :: emailValidation = {}", emailValidation);
     Optional<User> optionalUser = repository
         .findByEmail(emailValidation.getUsername());
@@ -171,7 +177,7 @@ public class UserServiceImpl implements UserService {
     user.setActive(true);
 
     tokenService.save(token);
-    repository.save(user);
+    return repository.save(user);
   }
 
   @Override
@@ -209,7 +215,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void resetPassword(ResetPassword resetPassword) {
+  public User resetPassword(ResetPassword resetPassword) {
     log.debug("resetPassword() :: resetPassword = {}", resetPassword);
     Optional<User> optionalUser = repository.findByEmail(resetPassword.getUsername());
 
@@ -243,11 +249,11 @@ public class UserServiceImpl implements UserService {
     user.setPassword(encoder.encode(resetPassword.getPassword()));
 
     tokenService.save(token);
-    repository.save(user);
+    return repository.save(user);
   }
 
   @Override
-  public void changePassword(String email, ChangePassword changePassword) {
+  public User changePassword(String email, ChangePassword changePassword) {
     log.debug("changePassword() :: username = {}, changePassword = {}", email, changePassword);
 
     if (!changePassword.getConfirmation().equals(changePassword.getNewPassword())) {
@@ -270,6 +276,6 @@ public class UserServiceImpl implements UserService {
     log.debug("changePassword() :: all test passed, changing the password.");
     user.setPassword(encoder.encode(changePassword.getNewPassword()));
 
-    repository.save(user);
+    return repository.save(user);
   }
 }

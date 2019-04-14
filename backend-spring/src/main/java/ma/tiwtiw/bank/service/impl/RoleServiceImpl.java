@@ -1,11 +1,12 @@
 package ma.tiwtiw.bank.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import ma.tiwtiw.bank.entity.Right;
 import ma.tiwtiw.bank.entity.Role;
-import ma.tiwtiw.bank.entity.User;
+import ma.tiwtiw.bank.exception.ClientException;
 import ma.tiwtiw.bank.exception.ResourceNotFoundException;
 import ma.tiwtiw.bank.pojo.RightEnum;
 import ma.tiwtiw.bank.repository.RoleRepository;
@@ -23,32 +24,23 @@ public class RoleServiceImpl implements RoleService {
 
   private final RoleRepository roleRepository;
 
-  private final UserService userService;
-
   private final RightService rightService;
 
-  public RoleServiceImpl(RoleRepository roleRepository, UserService userService,
+  public RoleServiceImpl(RoleRepository roleRepository,
       RightService rightService) {
     this.roleRepository = roleRepository;
-    this.userService = userService;
     this.rightService = rightService;
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<Role> findAll() {
-    return roleRepository.findAllAndDeletedIsFalse();
+    log.debug("findAll()");
+    return roleRepository.findAllByDeletedIsFalse();
   }
 
   @Override
-  public List<Role> findAll(String username) {
-    log.debug("findAll() :: username = {}", username);
-
-    User user = userService.findByEmail(username);
-
-    return roleRepository.findAllByUsers(user);
-  }
-
-  @Override
+  @Transactional(readOnly = true)
   public Role findById(Long id) {
     return roleRepository.findByIdAndDeletedIsFalse(id).orElseThrow(() -> {
       log.debug("findById() :: id = {}", id);
@@ -57,8 +49,19 @@ public class RoleServiceImpl implements RoleService {
   }
 
   @Override
-  public void add(String name, List<RightEnum> rightEnums) {
+  @Transactional(readOnly = true)
+  public Optional<Role> findByName(String name) {
+    return roleRepository.findByName(name);
+  }
+
+  @Override
+  public Role add(String name, List<RightEnum> rightEnums) {
     log.debug("add() :: name = {}, rights = {}", name, rightEnums);
+
+    roleRepository.findByName(name).ifPresent(role -> {
+      log.warn("add() :: role with the name = {}, already exist", name);
+      throw new ClientException(Translator.translate("exception.role.already-exist"));
+    });
 
     List<Right> rights = rightEnums.stream()
         .map(rightService::findByRightEnum)
@@ -68,12 +71,19 @@ public class RoleServiceImpl implements RoleService {
     role.setName(name);
     role.setRights(rights);
 
-    roleRepository.save(role);
+    return roleRepository.save(role);
   }
 
   @Override
-  public void update(Long id, String name, List<RightEnum> rightEnums) {
+  public Role update(Long id, String name, List<RightEnum> rightEnums) {
     log.debug("update() :: id = {}, name = {}, rights = {}", id, name, rightEnums);
+
+    roleRepository.findByName(name).ifPresent(role -> {
+      if (!role.getId().equals(id)) {
+        log.warn("add() :: role with the name = {}, already exist", name);
+        throw new ClientException(Translator.translate("exception.role.already-exist"));
+      }
+    });
 
     Role role = findById(id);
 
@@ -85,16 +95,16 @@ public class RoleServiceImpl implements RoleService {
     role.getRights().clear();
     role.getRights().addAll(rights);
 
-    roleRepository.save(role);
+    return roleRepository.save(role);
   }
 
   @Override
-  public void delete(Long id) {
+  public Role delete(Long id) {
     log.debug("delete() :: id = {}", id);
     Role role = findById(id);
 
     role.setDeleted(true);
 
-    roleRepository.save(role);
+    return roleRepository.save(role);
   }
 }

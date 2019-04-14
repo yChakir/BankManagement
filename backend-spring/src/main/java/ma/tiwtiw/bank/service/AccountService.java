@@ -2,6 +2,7 @@ package ma.tiwtiw.bank.service;
 
 import java.util.List;
 import ma.tiwtiw.bank.entity.Account;
+import ma.tiwtiw.bank.entity.Role;
 import ma.tiwtiw.bank.pojo.AccountStatus;
 
 public interface AccountService {
@@ -14,17 +15,13 @@ public interface AccountService {
 
   Account findById(Long id);
 
-  int countByTypeName(String name);
+  Account add(String username, String name, Long type);
 
-  int countByUsername(String username);
+  Account update(Long id, String name, Long type);
 
-  void add(String username, String name, Long type);
+  Account delete(Long id);
 
-  void update(Long id, String name, Long type);
+  Account approve(Long id);
 
-  void delete(Long id);
-
-  void approve(Long id);
-
-  void reject(Long id);
+  Account reject(Long id);
 }

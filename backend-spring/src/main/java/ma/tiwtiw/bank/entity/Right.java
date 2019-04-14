@@ -47,7 +47,7 @@ public class Right extends BaseEntity {
   private String description;
 
   @Column(name = "right_active")
-  private boolean active = true;
+  private boolean active;
 
   @JsonIgnore
   @NotAudited

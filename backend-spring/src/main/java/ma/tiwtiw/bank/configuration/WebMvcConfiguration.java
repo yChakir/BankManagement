@@ -1,5 +1,6 @@
 package ma.tiwtiw.bank.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.FormatterRegistry;
@@ -10,18 +11,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
-  private final HandlerInterceptor jwtAuthorizationFilter;
+  private HandlerInterceptor jwtAuthorizationFilter;
 
   private final Converter registrationToUserConverter;
 
   private final Converter accountToAccountResultConverter;
 
-  public WebMvcConfiguration(HandlerInterceptor jwtAuthorizationFilter,
-      Converter registrationToUserConverter,
+  public WebMvcConfiguration(Converter registrationToUserConverter,
       Converter accountToAccountResultConverter) {
-    this.jwtAuthorizationFilter = jwtAuthorizationFilter;
     this.registrationToUserConverter = registrationToUserConverter;
     this.accountToAccountResultConverter = accountToAccountResultConverter;
+  }
+
+  @Autowired
+  public void setJwtAuthorizationFilter(HandlerInterceptor jwtAuthorizationFilter) {
+    this.jwtAuthorizationFilter = jwtAuthorizationFilter;
   }
 
   @Override

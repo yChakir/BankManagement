@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AccountTypePageComponent } from './account-type-page.component';
+import {AccountTypePageComponent} from './account-type-page.component';
 
 describe('AccountTypePageComponent', () => {
   let component: AccountTypePageComponent;
@@ -8,7 +8,7 @@ describe('AccountTypePageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AccountTypePageComponent ]
+      declarations: [AccountTypePageComponent]
     })
     .compileComponents();
   }));

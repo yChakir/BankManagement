@@ -1,5 +1,6 @@
 package ma.tiwtiw.bank.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString.Exclude;
 import org.hibernate.envers.Audited;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -33,6 +35,8 @@ public class AccountType extends BaseEntity {
   @Column(name = "account_type_name")
   private String name;
 
+  @Exclude
+  @JsonIgnore
   @OneToMany(mappedBy = "type")
   private List<Account> accounts = new ArrayList<>();
 }

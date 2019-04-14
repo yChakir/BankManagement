@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ForgotPasswordFormComponent } from './forgot-password-form.component';
+import {ForgotPasswordFormComponent} from './forgot-password-form.component';
 
 describe('ForgotPasswordFormComponent', () => {
   let component: ForgotPasswordFormComponent;
@@ -8,7 +8,7 @@ describe('ForgotPasswordFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ForgotPasswordFormComponent ]
+      declarations: [ForgotPasswordFormComponent]
     })
     .compileComponents();
   }));

@@ -24,6 +24,10 @@ export class HeaderComponent implements OnInit {
   ) {
   }
 
+  get selected(): string {
+    return this.router.url;
+  }
+
   ngOnInit() {
     this.isAuthenticated = this.authService.getCurrentAuthenticationState();
     this.layoutService.getIsCollapsed().subscribe(value => this.isCollapsed = value);
@@ -36,9 +40,5 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-  }
-
-  get selected(): string {
-    return this.router.url;
   }
 }

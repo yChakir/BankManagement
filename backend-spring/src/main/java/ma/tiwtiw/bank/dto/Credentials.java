@@ -4,6 +4,7 @@ import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString.Exclude;
 
 @Data
 @NoArgsConstructor
@@ -11,5 +12,7 @@ import lombok.NoArgsConstructor;
 public class Credentials implements Serializable {
 
   private String username;
+
+  @Exclude
   private String password;
 }

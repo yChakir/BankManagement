@@ -48,7 +48,7 @@ public class EmailServiceImpl implements EmailService {
     mail.setSubject(Translator.translate("mail.validate-email.title"));
     mail.setType(MailType.VALIDATE_EMAIL);
 
-    Map model = new HashMap();
+    Map<String, Object> model = new HashMap<>();
 
     model.put("firstName", event.getToken().getUser().getFirstName());
     model.put("lastName", event.getToken().getUser().getLastName());
@@ -72,7 +72,7 @@ public class EmailServiceImpl implements EmailService {
     mail.setSubject(Translator.translate("mail.forgot-password.title"));
     mail.setType(MailType.FORGOT_PASSWORD);
 
-    Map model = new HashMap();
+    Map<String, Object> model = new HashMap<>();
 
     model.put("firstName", event.getToken().getUser().getFirstName());
     model.put("lastName", event.getToken().getUser().getLastName());
@@ -87,7 +87,7 @@ public class EmailServiceImpl implements EmailService {
 
   @Override
   public void sendAndSave(Mail mail, Map model) {
-    log.debug("sendAndSave() :: mail = {}, model = {}", mail, model);
+    log.debug("sendAndSave() :: mail = {}, model = {}", mail.getType(), model);
     try {
       log.debug("sendAndSave() :: building the message...");
       MimeMessage message = sender.createMimeMessage();
@@ -100,20 +100,21 @@ public class EmailServiceImpl implements EmailService {
       String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 
       mail.setContent(html);
+      mail.setSent(true);
 
       helper.setTo(mail.getTo());
       helper.setSubject(mail.getSubject());
       helper.setText(html, true);
 
-      log.debug("sendAndSave() :: Sending username = {}", mail);
+      log.debug("sendAndSave() :: Sending...");
       sender.send(message);
     } catch (Exception e) {
-      log.error("sendAndSave() :: error while sending mail = {}, message = {}", mail,
+      log.error("sendAndSave() :: error while sending mail = {}, message = {}", mail.getType(),
           e.getMessage());
       mail.setSent(false);
     } finally {
       emailRepository.save(mail);
-      log.debug("sendAndSave() :: Email sent = {}", mail);
+      log.debug("sendAndSave() :: Email sent = {}", mail.isSent());
     }
   }
 

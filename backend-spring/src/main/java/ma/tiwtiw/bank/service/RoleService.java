@@ -1,6 +1,7 @@
 package ma.tiwtiw.bank.service;
 
 import java.util.List;
+import java.util.Optional;
 import ma.tiwtiw.bank.entity.Role;
 import ma.tiwtiw.bank.pojo.RightEnum;
 
@@ -8,14 +9,14 @@ public interface RoleService {
 
   List<Role> findAll();
 
-  List<Role> findAll(String username);
-
   Role findById(Long id);
 
-  void add(String name, List<RightEnum> rightEnums);
+  Optional<Role> findByName(String name);
 
-  void update(Long id, String name, List<RightEnum> rightEnums);
+  Role add(String name, List<RightEnum> rightEnums);
 
-  void delete(Long id);
+  Role update(Long id, String name, List<RightEnum> rightEnums);
+
+  Role delete(Long id);
 
 }

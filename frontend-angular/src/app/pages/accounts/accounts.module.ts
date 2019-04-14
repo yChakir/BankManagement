@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { AccountsRoutingModule } from './accounts-routing.module';
+import {AccountsRoutingModule} from './accounts-routing.module';
 import {AccountListComponent} from "./account-list/account-list.component";
 import {AccountDetailsComponent} from "./account-details/account-details.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -17,4 +17,5 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
     NgZorroAntdModule
   ]
 })
-export class AccountsModule { }
+export class AccountsModule {
+}

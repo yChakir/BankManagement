@@ -28,17 +28,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private final CorsFilter corsFilter;
 
-  private final JwtUtil jwtUtil;
-
   @Resource(name = "userService")
   private UserDetailsService userDetailsService;
 
   @Autowired
-  public SecurityConfiguration(PasswordEncoder passwordEncoder,
-      CorsFilter corsFilter, JwtUtil jwtUtil) {
+  public SecurityConfiguration(PasswordEncoder passwordEncoder, CorsFilter corsFilter) {
     this.passwordEncoder = passwordEncoder;
     this.corsFilter = corsFilter;
-    this.jwtUtil = jwtUtil;
   }
 
   @Override
@@ -51,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .antMatchers("/static/**").permitAll()
         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll();
 
-    http.addFilter(new JwtAuthenticationFilter(authenticationManagerBean(), jwtUtil));
+    http.addFilter(new JwtAuthenticationFilter(authenticationManagerBean()));
     http.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
   }
 

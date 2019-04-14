@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RoleRepository extends RevisionRepository<Role, Long, Integer>, JpaRepository<Role, Long> {
 
-  List<Role> findAllAndDeletedIsFalse();
-
-  List<Role> findAllByUsers(User user);
+  List<Role> findAllByDeletedIsFalse();
 
   Optional<Role> findByIdAndDeletedIsFalse(Long id);
+
+  Optional<Role> findByName(String name);
 }

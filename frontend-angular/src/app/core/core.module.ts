@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {LayoutService} from "./layout.service";
 import {UserService} from "./user.service";
 
@@ -10,4 +10,5 @@ import {UserService} from "./user.service";
   ],
   providers: [LayoutService, UserService]
 })
-export class CoreModule { }
+export class CoreModule {
+}

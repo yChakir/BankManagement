@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { RegisterRoutingModule } from './register-routing.module';
+import {RegisterRoutingModule} from './register-routing.module';
 import {RegisterFormComponent} from "./register-form/register-form.component";
 import {RegisterPageComponent} from "./register-page/register-page.component";
-import {FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgZorroAntdModule} from "ng-zorro-antd";
 
 @NgModule({
@@ -17,4 +17,5 @@ import {NgZorroAntdModule} from "ng-zorro-antd";
   ],
   declarations: [RegisterFormComponent, RegisterPageComponent]
 })
-export class RegisterModule { }
+export class RegisterModule {
+}

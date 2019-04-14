@@ -26,11 +26,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
   private AuthenticationManager authenticationManager;
 
-  private JwtUtil jwtUtil;
-
-  public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+  public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
     this.authenticationManager = authenticationManager;
-    this.jwtUtil = jwtUtil;
   }
 
   @Override
@@ -88,7 +85,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     User user = (User) authResult.getPrincipal();
     log.debug("successfulAuthentication() :: user = {}", user.getEmail());
 
-    String token = jwtUtil.getToken(user);
+    String token = JwtUtil.getToken(user);
 
     log.debug("successfulAuthentication() :: adding access token to headers, user = {}, token = {}",
         user.getEmail(), token);

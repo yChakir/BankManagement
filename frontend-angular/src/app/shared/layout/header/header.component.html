@@ -10,7 +10,8 @@
         <a [routerLink]="routes.login"><i nz-icon type="login"></i><span class="nav-text">Login</span></a>
       </li>
       <li *ngIf="!isAuthenticated" nz-menu-item [nzSelected]="selected === routes.register">
-        <a [routerLink]="routes.register"><i nz-icon type="user-add"></i><span class="nav-text">Register</span></a>
+        <a [routerLink]="routes.register"><i nz-icon type="user-add"></i><span
+          class="nav-text">Register</span></a>
       </li>
       <li *ngIf="isAuthenticated" nz-menu-item>
         <a (click)="logout()"><i nz-icon type="logout"></i><span class="nav-text">Logout</span></a>

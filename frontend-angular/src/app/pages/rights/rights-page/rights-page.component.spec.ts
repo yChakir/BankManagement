@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RightsPageComponent } from './rights-page.component';
+import {RightsPageComponent} from './rights-page.component';
 
 describe('RightsPageComponent', () => {
   let component: RightsPageComponent;
@@ -8,7 +8,7 @@ describe('RightsPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RightsPageComponent ]
+      declarations: [RightsPageComponent]
     })
     .compileComponents();
   }));

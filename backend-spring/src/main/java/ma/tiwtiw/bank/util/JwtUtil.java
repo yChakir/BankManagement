@@ -13,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
 public class JwtUtil {
 
   public static final long EXPIRATION_TIME = 864_000_000; // 10 days
@@ -21,10 +20,7 @@ public class JwtUtil {
   public static final String TOKEN_PREFIX = "Bearer";
   public static final String HEADER_STRING = "Authorization";
 
-  @Autowired
-  private UserService userService;
-
-  public String getToken(User user) {
+  public static String getToken(User user) {
     log.debug("getToken() :: user = {}", user);
     String token = Jwts.builder()
         .setSubject(user.getUsername())
@@ -37,24 +33,13 @@ public class JwtUtil {
     return token;
   }
 
-  public Authentication parse(String token) {
+  public static String parse(String token) {
     log.debug("parse() :: token = {}", token);
     Claims claims = Jwts.parser()
         .setSigningKey(TOKEN_SECRET)
         .parseClaimsJws(token.substring(TOKEN_PREFIX.length()))
         .getBody();
 
-    String username = claims.getSubject();
-    log.debug("parse() :: user extracted = {}", username);
-
-    User user = userService.findByEmail(username);
-    log.debug("parse() :: user = {}", user);
-
-    if (user == null) {
-      return null;
-    }
-
-    return new UsernamePasswordAuthenticationToken(username, null, user.getAuthorities());
-
+    return claims.getSubject();
   }
 }

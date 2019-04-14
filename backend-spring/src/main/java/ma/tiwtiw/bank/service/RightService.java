@@ -12,10 +12,12 @@ public interface RightService {
 
   Right findByRightEnum(RightEnum rightEnum);
 
-  void update(RightEnum rightEnum, String description);
+  Right add(RightEnum rightEnum, String description);
 
-  void activate(RightEnum rightEnum);
+  Right update(RightEnum rightEnum, String description);
 
-  void deactivate(RightEnum rightEnum);
+  Right activate(RightEnum rightEnum);
+
+  Right deactivate(RightEnum rightEnum);
 
 }

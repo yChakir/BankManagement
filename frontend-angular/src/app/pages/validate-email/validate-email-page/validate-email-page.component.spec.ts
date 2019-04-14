@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ValidateEmailPageComponent } from './validate-email-page.component';
+import {ValidateEmailPageComponent} from './validate-email-page.component';
 
 describe('ValidateEmailPageComponent', () => {
   let component: ValidateEmailPageComponent;
@@ -8,7 +8,7 @@ describe('ValidateEmailPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ValidateEmailPageComponent ]
+      declarations: [ValidateEmailPageComponent]
     })
     .compileComponents();
   }));

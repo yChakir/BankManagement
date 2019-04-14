@@ -1,20 +1,24 @@
 <div class="logo"></div>
 <ul nz-menu [nzTheme]="'light'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
   <li nz-menu-item [nzSelected]="selected === routes.profile">
-    <a routerLink="profile"><i nz-icon type="profile"></i><span class="nav-text">profile</span></a>
+    <a [routerLink]="routes.profile"><i nz-icon type="profile"></i><span class="nav-text">profile</span></a>
+  </li>
+  <li nz-menu-item [nzSelected]="selected === routes.accountType">
+    <a [routerLink]="routes.accountType"><i nz-icon type="contacts"></i><span
+      class="nav-text">account types</span></a>
   </li>
   <li nz-menu-item [nzSelected]="selected === routes.accounts">
-    <a routerLink="accounts" [routerLinkActive]="'active'"><i nz-icon type="contacts"></i><span
+    <a [routerLink]="routes.accounts"><i nz-icon type="contacts"></i><span
       class="nav-text">accounts</span></a>
   </li>
   <li nz-menu-item [nzSelected]="selected === routes.roles">
-    <a routerLink="roles"><i nz-icon type="user"></i><span class="nav-text">roles</span></a>
+    <a [routerLink]="routes.roles"><i nz-icon type="user"></i><span class="nav-text">roles</span></a>
   </li>
   <li nz-menu-item [nzSelected]="selected === routes.rights">
-    <a routerLink="rights"><i nz-icon type="lock"></i><span class="nav-text">rights</span></a>
+    <a [routerLink]="routes.rights"><i nz-icon type="lock"></i><span class="nav-text">rights</span></a>
   </li>
   <li nz-menu-item [nzSelected]="selected === routes.history">
-    <a routerLink="history"><i nz-icon type="hourglass"></i><span
+    <a [routerLink]="routes.history"><i nz-icon type="hourglass"></i><span
       class="nav-text">history</span></a>
   </li>
 </ul>

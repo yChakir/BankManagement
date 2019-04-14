@@ -6,5 +6,11 @@ public interface AppConstants {
 
   String VALIDATE_EMAIL_MAIL = "validate-email-mail.ftl";
 
-  Object FRONTEND_URL = "http://localhost:4200";
+  String FRONTEND_URL = "http://localhost:4200";
+
+  String ADMIN_EMAIL = "bank.management@gmail.com";
+
+  String ADMIN_PASSWORD = "password";
+
+  String ADMIN_ROLE_NAME = "ADMIN";
 }

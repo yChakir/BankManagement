@@ -2,7 +2,12 @@ package ma.tiwtiw.bank.filter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import ma.tiwtiw.bank.entity.User;
+import ma.tiwtiw.bank.service.UserService;
 import ma.tiwtiw.bank.util.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -10,10 +15,11 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 @Component
 public class JwtAuthorizationFilter extends HandlerInterceptorAdapter {
 
-  private JwtUtil jwtUtil;
+  private UserService userService;
 
-  public JwtAuthorizationFilter(JwtUtil jwtUtil) {
-    this.jwtUtil = jwtUtil;
+  @Autowired
+  public void setUserService(UserService userService) {
+    this.userService = userService;
   }
 
   @Override
@@ -22,7 +28,16 @@ public class JwtAuthorizationFilter extends HandlerInterceptorAdapter {
     String token = request.getHeader(JwtUtil.HEADER_STRING);
 
     if (token != null && token.startsWith(JwtUtil.TOKEN_PREFIX)) {
-      SecurityContextHolder.getContext().setAuthentication(jwtUtil.parse(token));
+      String username = JwtUtil.parse(token);
+
+      User user = userService.findByEmail(username);
+
+      if (user != null) {
+        Authentication authentication = new UsernamePasswordAuthenticationToken(username, null,
+            user.getAuthorities());
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+      }
     }
 
     return super.preHandle(request, response, handler);

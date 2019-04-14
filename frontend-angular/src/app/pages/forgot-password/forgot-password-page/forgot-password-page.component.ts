@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-forgot-password-page',
@@ -9,7 +9,8 @@ export class ForgotPasswordPageComponent implements OnInit {
 
   marginTop: string = '3%';
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

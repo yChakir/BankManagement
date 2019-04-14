@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-validate-email-page',
@@ -9,7 +9,8 @@ export class ValidateEmailPageComponent implements OnInit {
 
   marginTop: string = '6%';
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

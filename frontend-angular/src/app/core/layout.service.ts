@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable, Subject} from "rxjs";
 
 @Injectable({
@@ -10,7 +10,8 @@ export class LayoutService {
 
   private isCollapsed: Subject<boolean> = new Subject<boolean>();
 
-  constructor() { }
+  constructor() {
+  }
 
   toggle() {
     this.isCollapsed.next(this.current = !this.current);

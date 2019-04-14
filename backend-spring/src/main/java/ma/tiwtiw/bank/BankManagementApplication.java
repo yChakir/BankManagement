@@ -1,5 +1,8 @@
 package ma.tiwtiw.bank;
 
+import ma.tiwtiw.bank.service.RightService;
+import ma.tiwtiw.bank.service.RoleService;
+import ma.tiwtiw.bank.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

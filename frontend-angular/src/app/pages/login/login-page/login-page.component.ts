@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-login-page',
@@ -11,7 +11,8 @@ export class LoginPageComponent implements OnInit {
 
   marginTop: string = '6%';
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     this.checkLogin();

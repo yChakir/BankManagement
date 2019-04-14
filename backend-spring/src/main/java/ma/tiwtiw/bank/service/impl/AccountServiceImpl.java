@@ -66,21 +66,7 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  @Transactional(readOnly = true)
-  public int countByTypeName(String name) {
-    log.debug("countByTypeName() :: name = {}", name);
-    return accountRepository.countAllByType_Name(name);
-  }
-
-  @Override
-  @Transactional(readOnly = true)
-  public int countByUsername(String username) {
-    log.debug("countByUsername() :: username = {}", username);
-    return accountRepository.countAllByUser_Email(username);
-  }
-
-  @Override
-  public void add(String username, String name, Long type) {
+  public Account add(String username, String name, Long type) {
     log.debug("add() :: username = {}, name = {}, type = {}", username, name, type);
 
     User user = userService.findByEmail(username);
@@ -92,11 +78,11 @@ public class AccountServiceImpl implements AccountService {
     account.setType(accountType);
     account.setStatus(AccountStatus.WAITING_FOR_APPROVAL);
 
-    accountRepository.save(account);
+    return accountRepository.save(account);
   }
 
   @Override
-  public void update(Long id, String name, Long type) {
+  public Account update(Long id, String name, Long type) {
     log.debug("update() :: id = {}, name = {}, type = {}", id, name, type);
 
     Account account = findById(id);
@@ -111,22 +97,22 @@ public class AccountServiceImpl implements AccountService {
       account.setType(accountType);
     }
 
-    accountRepository.save(account);
+    return accountRepository.save(account);
   }
 
   @Override
-  public void delete(Long id) {
+  public Account delete(Long id) {
     log.debug("delete() :: id = {}", id);
 
     Account account = findById(id);
 
     account.setDeleted(true);
 
-    accountRepository.save(account);
+    return accountRepository.save(account);
   }
 
   @Override
-  public void approve(Long id) {
+  public Account approve(Long id) {
     log.debug("approve() :: id = {}", id);
 
     Account account = findById(id);
@@ -138,11 +124,11 @@ public class AccountServiceImpl implements AccountService {
 
     account.setStatus(AccountStatus.APPROVED);
 
-    accountRepository.save(account);
+    return accountRepository.save(account);
   }
 
   @Override
-  public void reject(Long id) {
+  public Account reject(Long id) {
     log.debug("reject() :: id = {}", id);
 
     Account account = findById(id);
@@ -154,6 +140,6 @@ public class AccountServiceImpl implements AccountService {
 
     account.setStatus(AccountStatus.REJECTED);
 
-    accountRepository.save(account);
+    return accountRepository.save(account);
   }
 }

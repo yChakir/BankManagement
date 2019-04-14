@@ -13,13 +13,14 @@ public interface UserService extends UserDetailsService {
 
   User register(Registration registration);
 
-  void delete(String email);
+  User delete(String email);
 
-  void emailValidation(ValidateEmail emailValidation);
+  User emailValidation(ValidateEmail emailValidation);
 
   void forgotPassword(String email);
 
-  void resetPassword(ResetPassword resetPassword);
+  User resetPassword(ResetPassword resetPassword);
 
-  void changePassword(String email, ChangePassword changePassword);
+  User changePassword(String email, ChangePassword changePassword);
+
 }

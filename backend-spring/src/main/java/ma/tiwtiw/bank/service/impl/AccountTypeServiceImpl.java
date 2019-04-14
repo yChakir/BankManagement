@@ -19,12 +19,8 @@ public class AccountTypeServiceImpl implements AccountTypeService {
 
   private final AccountTypeRepository accountTypeRepository;
 
-  private final AccountService accountService;
-
-  public AccountTypeServiceImpl(AccountTypeRepository accountTypeRepository,
-      AccountService accountService) {
+  public AccountTypeServiceImpl(AccountTypeRepository accountTypeRepository) {
     this.accountTypeRepository = accountTypeRepository;
-    this.accountService = accountService;
   }
 
   @Override
@@ -45,33 +41,33 @@ public class AccountTypeServiceImpl implements AccountTypeService {
   }
 
   @Override
-  public void add(String name) {
+  public AccountType add(String name) {
     log.debug("add() :: name = {}", name);
 
     AccountType type = new AccountType();
     type.setName(name);
 
-    accountTypeRepository.save(type);
+    return accountTypeRepository.save(type);
   }
 
   @Override
-  public void update(Long id, String name) {
+  public AccountType update(Long id, String name) {
     log.debug("update() :: id = {}, name = {}", id, name);
 
     AccountType accountType = findById(id);
 
     accountType.setName(name);
 
-    accountTypeRepository.save(accountType);
+    return accountTypeRepository.save(accountType);
   }
 
   @Override
-  public void delete(Long id) {
+  public AccountType delete(Long id) {
     log.debug("delete() :: id = {}", id);
 
     AccountType accountType = findById(id);
 
-    int count = accountService.countByTypeName(accountType.getName());
+    int count = accountType.getAccounts().size();
 
     if (count > 0) {
       log.warn("delete() :: can't delete affected account type, id = {}, name = {}, count = {}", id,
@@ -81,6 +77,6 @@ public class AccountTypeServiceImpl implements AccountTypeService {
 
     accountType.setDeleted(true);
 
-    accountTypeRepository.save(accountType);
+    return accountTypeRepository.save(accountType);
   }
 }

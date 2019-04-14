@@ -9,9 +9,9 @@ public interface AccountTypeService {
 
   AccountType findById(Long id);
 
-  void add(String name);
+  AccountType add(String name);
 
-  void update(Long id, String name);
+  AccountType update(Long id, String name);
 
-  void delete(Long id);
+  AccountType delete(Long id);
 }

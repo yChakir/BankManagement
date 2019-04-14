@@ -46,7 +46,7 @@ const routes: Routes = [
   },
   {
     path: getRoute(environment.routes.accountType),
-    loadChildren: "./pages/accounts/account-type.module#AccountTypeModule",
+    loadChildren: "./pages/account-type/account-type.module#AccountTypeModule",
     canActivate: [RouteGuardService]
   },
   {
@@ -66,7 +66,7 @@ const routes: Routes = [
   }
 ];
 
-function getRoute(value: string): string {
+export function getRoute(value: string): string {
   return value.substring(1);
 }
 

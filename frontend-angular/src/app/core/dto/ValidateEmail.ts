@@ -1,7 +1,7 @@
 class ValidateEmail {
 
   username: string;
-  
+
   token: string;
 
   constructor(username: string, token: string) {

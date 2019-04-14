@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LayoutService} from "../../../core/layout.service";
 import {UserService} from "../../../core/user.service";
 import {Router} from "@angular/router";
@@ -21,15 +21,16 @@ export class DrawerComponent implements OnInit {
     private authService: UserService,
     private layoutService: LayoutService,
     private router: Router
-  ) { }
+  ) {
+  }
+
+  get selected(): string {
+    return this.router.url;
+  }
 
   ngOnInit() {
     this.isAuthenticated = this.authService.getCurrentAuthenticationState();
     this.layoutService.getIsCollapsed().subscribe(value => this.isCollapsed = value);
     this.authService.getIsAuthenticated().subscribe(value => this.isAuthenticated = value);
-  }
-
-  get selected(): string {
-    return this.router.url;
   }
 }
